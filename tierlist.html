@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tier list ARAM</title>
+<meta name="description" content="Tier list di bravura ad ARAM tra amici, aggiornata automaticamente con l'API Riot.">
+<meta name="theme-color" content="#16161a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+<style>
+  :root {
+    --sfondo: #16161a;
+    --pannello: #1f1f24;
+    --pannello-2: #26262d;
+    --bordo: #000;
+    --linea: #33333b;
+    --testo: #ececf1;
+    --testo-2: #a3a3ad;
+    --su: #4ade80;
+    --giu: #f87171;
+    --nuovo: #60a5fa;
+    --chip: 84px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--sfondo); color: var(--testo);
+    font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .pagina { max-width: 1240px; margin: 0 auto; padding: 24px 16px 40px; }
+  h1 { margin: 0 0 4px; font-size: clamp(1.5rem, 4vw, 2.1rem); letter-spacing: -.01em; }
+  h2 { margin: 36px 0 6px; font-size: 1.25rem; }
+  .sotto { margin: 0; color: var(--testo-2); }
+  .sotto strong { color: var(--testo); font-weight: 600; }
+
+  .avviso { margin: 18px 0 0; padding: 12px 14px; border-radius: 8px; border-left: 5px solid; }
+  .avviso p { margin: 0; }
+  .avviso p + p { margin-top: 4px; }
+  .avviso.chiave { background: #3b1218; border-color: #f43f5e; }
+  .avviso.errore { background: #3a2a0d; border-color: #f59e0b; }
+
+  /* ---- Tier list ---- */
+  .tabellone { margin-top: 22px; border: 2px solid var(--bordo); background: var(--bordo); display: grid; gap: 2px; }
+  .riga { display: grid; grid-template-columns: 92px 1fr; min-height: calc(var(--chip) + 8px); background: var(--pannello); }
+  .etichetta {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    color: #111; font-weight: 800; font-size: 2rem; padding: 4px; word-break: break-word;
+  }
+  .etichetta.senza { background: #5b5b66; color: #eee; font-size: .8rem; font-weight: 600; line-height: 1.2; }
+  .carte { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 4px; padding: 4px; }
+  .carta {
+    position: relative; width: var(--chip); height: var(--chip); flex: none;
+    background: var(--pannello-2) center/cover no-repeat; overflow: hidden;
+  }
+  .carta img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+  .carta .iniziale {
+    width: 100%; height: 100%; display: grid; place-items: center;
+    font-size: 2rem; font-weight: 800; color: var(--testo-2);
+  }
+  .carta .nome {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 3px 3px;
+    background: linear-gradient(transparent, rgba(0,0,0,.88) 45%);
+    font-size: .74rem; font-weight: 700; text-align: center; line-height: 1.15;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    text-shadow: 0 1px 2px #000;
+  }
+  .carta .punti {
+    position: absolute; top: 3px; left: 3px; padding: 0 4px; border-radius: 4px;
+    background: rgba(0,0,0,.75); font-size: .7rem; font-weight: 700; font-variant-numeric: tabular-nums;
+  }
+  .freccia {
+    position: absolute; top: 3px; right: 3px; min-width: 20px; height: 20px; padding: 0 4px;
+    border-radius: 10px; display: grid; place-items: center;
+    font-size: .72rem; font-weight: 800; color: #111; box-shadow: 0 0 0 2px rgba(0,0,0,.6);
+  }
+  .freccia.su { background: var(--su); }
+  .freccia.giu { background: var(--giu); }
+  .freccia.nuovo { background: var(--nuovo); font-size: .6rem; }
+  .legenda { margin: 10px 0 0; color: var(--testo-2); font-size: .88rem; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .legenda .segno { font-weight: 800; }
+  .segno.su { color: var(--su); } .segno.giu { color: var(--giu); } .segno.nuovo { color: var(--nuovo); }
+
+  /* ---- Tabella ---- */
+  .nota { margin: 0 0 10px; color: var(--testo-2); font-size: .88rem; }
+  .scorri { overflow-x: auto; border: 1px solid var(--linea); border-radius: 8px; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  th, td { padding: 8px 9px; text-align: right; border-bottom: 1px solid var(--linea); }
+  th { background: var(--pannello-2); font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; color: var(--testo-2);
+       cursor: pointer; user-select: none; position: sticky; top: 0; }
+  th:hover, th:focus-visible { color: var(--testo); outline: none; }
+  th[aria-sort="ascending"]::after { content: " ▲"; }
+  th[aria-sort="descending"]::after { content: " ▼"; }
+  tbody tr:nth-child(even) { background: #1b1b20; }
+  tbody tr:hover { background: #2a2a31; }
+  tbody tr:last-child td { border-bottom: 0; }
+  .sx { text-align: left; }
+  td.giocatore, th.giocatore { position: sticky; left: 0; z-index: 1; text-align: left; }
+  td.giocatore { background: var(--pannello); font-weight: 700; max-width: 170px; overflow: hidden; text-overflow: ellipsis; }
+  th.giocatore { z-index: 2; }
+  .badge { display: inline-block; min-width: 26px; padding: 1px 6px; border-radius: 5px; color: #111; font-weight: 800; text-align: center; }
+  .badge.nessuno { background: #44444d; color: var(--testo-2); font-weight: 600; }
+  .delta.su { color: var(--su); } .delta.giu { color: var(--giu); }
+  .tenue { color: var(--testo-2); }
+  .campione { display: inline-flex; align-items: center; gap: 8px; }
+  .campione img { width: 28px; height: 28px; border-radius: 50%; display: block; }
+
+  footer { margin-top: 36px; color: var(--testo-2); font-size: .8rem; }
+  footer p { margin: 4px 0; }
+
+  @media (max-width: 600px) {
+    :root { --chip: 64px; }
+    .pagina { padding: 18px 16px 32px; }
+    .riga { grid-template-columns: 56px 1fr; }
+    .etichetta { font-size: 1.5rem; }
+    .etichetta.senza { font-size: .66rem; }
+    .carta .nome { font-size: .64rem; }
+    th, td { padding: 8px 8px; }
+    td.giocatore { max-width: 110px; }
+  }
+</style>
+</head>
+<body>
+<main class="pagina">
+  <header>
+    <h1>Tier list ARAM</h1>
+    <p class="sotto">
+      ARAM e ARAM: Mayhem giocate insieme (almeno 2 di noi) dal <strong>01/01/2026</strong>
+      · <strong>455</strong> partite
+      · aggiornato il <strong>01/10/2026 alle 20:57</strong>
+· client LoL letto il 01/10/2026 alle 20:57    </p>
+  </header>
+
+
+  <section class="tabellone" aria-label="Tier list">
+    <div class="riga">
+      <div class="etichetta" style="background: #ff7f7f">S</div>
+      <div class="carte">
+<div class="carta" title="Cicca · 221 partite · 95,6 punti · più giocato: Fizz">
+  <div class="iniziale">C</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Fizz.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">96</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">Cicca</span>
+</div><div class="carta" title="Dalmarus · 93 partite · 80,8 punti · più giocato: Aphelios">
+  <div class="iniziale">D</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Aphelios.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">81</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">Dalmarus</span>
+</div>      </div>
+    </div>
+    <div class="riga">
+      <div class="etichetta" style="background: #ffbf7f">A</div>
+      <div class="carte">
+<div class="carta" title="Goodluck Perez · 181 partite · 72,1 punti · più giocato: Qiyana">
+  <div class="iniziale">G</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Qiyana.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">72</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">Goodluck Perez</span>
+</div><div class="carta" title="Eredis · 409 partite · 63,9 punti · più giocato: Tahm Kench">
+  <div class="iniziale">E</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/TahmKench.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">64</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">Eredis</span>
+</div>      </div>
+    </div>
+    <div class="riga">
+      <div class="etichetta" style="background: #ffdf7f">B</div>
+      <div class="carte">
+<div class="carta" title="DELUHI · 30 partite · 46,7 punti · più giocato: Lissandra">
+  <div class="iniziale">D</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Lissandra.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">47</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">DELUHI</span>
+</div><div class="carta" title="Baldorius · 119 partite · 45,5 punti · più giocato: Ahri">
+  <div class="iniziale">B</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Ahri.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">46</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">Baldorius</span>
+</div>      </div>
+    </div>
+    <div class="riga">
+      <div class="etichetta" style="background: #ffff7f">C</div>
+      <div class="carte">
+<div class="carta" title="no color · 264 partite · 44,9 punti · più giocato: Vayne">
+  <div class="iniziale">N</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Vayne.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">45</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">no color</span>
+</div><div class="carta" title="CoachTRIMO · 190 partite · 42,2 punti · più giocato: Rell">
+  <div class="iniziale">C</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">42</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">CoachTRIMO</span>
+</div><div class="carta" title="SegAlfredo · 197 partite · 35,1 punti · più giocato: Karthus">
+  <div class="iniziale">S</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">35</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">SegAlfredo</span>
+</div>      </div>
+    </div>
+    <div class="riga">
+      <div class="etichetta" style="background: #bfff7f">D</div>
+      <div class="carte">
+<div class="carta" title="Shaconiglio · 176 partite · 22,6 punti · più giocato: Tristana">
+  <div class="iniziale">S</div><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Tristana.png" alt="" loading="lazy" width="84" height="84" onerror="this.remove()"><span class="punti">23</span><span class="freccia nuovo" aria-label="Nuovo in classifica">NEW</span><span class="nome">Shaconiglio</span>
+</div>      </div>
+    </div>
+  </section>
+  <p class="legenda">
+    <span><span class="segno su">▲</span> salito · <span class="segno giu">▼</span> sceso · <span class="segno nuovo">NEW</span> nuovo in classifica — rispetto al 01/10/2026 alle 20:44</span>
+  </p>
+
+  <h2>Statistiche</h2>
+  <p class="nota">Medie per partita. Tocca un'intestazione per ordinare.</p>
+  <div class="scorri">
+    <table id="statistiche">
+      <thead>
+        <tr>
+          <th class="giocatore" data-tipo="testo" tabindex="0">Giocatore</th>
+          <th data-tipo="num" tabindex="0" title="Tier">Tier</th>
+          <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio 0-100">Punti</th>
+          <th data-tipo="num" tabindex="0" title="Variazione del punteggio">Δ</th>
+          <th data-tipo="num" tabindex="0">Partite</th>
+          <th data-tipo="num" tabindex="0" title="Percentuale di vittorie">Vittorie</th>
+          <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi">K / D / A</th>
+          <th data-tipo="num" tabindex="0" title="(uccisioni + assist) / morti">KDA</th>
+          <th data-tipo="num" tabindex="0" title="Kill participation: partecipazione alle uccisioni della squadra">KP</th>
+          <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
+          <th data-tipo="num" tabindex="0" title="Danni ai campioni al minuto">DPM</th>
+          <th data-tipo="num" tabindex="0" title="Quota dei danni subiti dalla squadra">Subiti</th>
+          <th data-tipo="num" tabindex="0" title="Durata media">Durata</th>
+          <th class="sx" data-tipo="testo" tabindex="0" title="Campione più giocato">Campione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="giocatore" data-v="Cicca" title="Cicca">Cicca</td>
+          <td data-v="5">
+<span class="badge" style="background: #ff7f7f">S</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="95.562">95,6</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="221">221</td>
+          <td data-v="0.5972850678733032">59,7%</td>
+          <td data-v="11.203619909502262">11,2 / 9,3 / 22,0</td>
+          <td data-v="3.5849609375">3,58</td>
+          <td data-v="0.7359504401763405">73,6%</td>
+          <td data-v="0.26605271319753615">26,6%</td>
+          <td data-v="2360.5426514039323">2361</td>
+          <td data-v="0.23060237848193962">23,1%</td>
+          <td data-v="1071.10407239819">17:51</td>
+          <td class="sx" data-v="Fizz">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Fizz.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Fizz <span class="tenue">×9</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="Dalmarus" title="Dalmarus">Dalmarus</td>
+          <td data-v="5">
+<span class="badge" style="background: #ff7f7f">S</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="80.788">80,8</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="93">93</td>
+          <td data-v="0.5161290322580645">51,6%</td>
+          <td data-v="9.053763440860216">9,1 / 8,7 / 19,3</td>
+          <td data-v="3.267326732673267">3,27</td>
+          <td data-v="0.7300135188356107">73,0%</td>
+          <td data-v="0.26669341972444627">26,7%</td>
+          <td data-v="1958.111250773648">1958</td>
+          <td data-v="0.2558325116399951">25,6%</td>
+          <td data-v="985.4408602150538">16:25</td>
+          <td class="sx" data-v="Aphelios">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Aphelios.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Aphelios <span class="tenue">×5</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="Goodluck Perez" title="Goodluck Perez">Goodluck Perez</td>
+          <td data-v="4">
+<span class="badge" style="background: #ffbf7f">A</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="72.14">72,1</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="181">181</td>
+          <td data-v="0.580110497237569">58,0%</td>
+          <td data-v="9.955801104972375">10,0 / 8,9 / 21,5</td>
+          <td data-v="3.558676654182272">3,56</td>
+          <td data-v="0.7050850590628537">70,5%</td>
+          <td data-v="0.22719338158140667">22,7%</td>
+          <td data-v="1939.5721046448625">1940</td>
+          <td data-v="0.21757058273237687">21,8%</td>
+          <td data-v="1100.7900552486187">18:21</td>
+          <td class="sx" data-v="Qiyana">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Qiyana.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Qiyana <span class="tenue">×11</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="Eredis" title="Eredis">Eredis</td>
+          <td data-v="4">
+<span class="badge" style="background: #ffbf7f">A</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="63.889">63,9</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="409">409</td>
+          <td data-v="0.49877750611246946">49,9%</td>
+          <td data-v="10.929095354523227">10,9 / 9,1 / 21,7</td>
+          <td data-v="3.596169409225789">3,60</td>
+          <td data-v="0.6856542631987412">68,6%</td>
+          <td data-v="0.23899913368052836">23,9%</td>
+          <td data-v="2196.661186922335">2197</td>
+          <td data-v="0.24152261825915158">24,2%</td>
+          <td data-v="1109.3789731051345">18:29</td>
+          <td class="sx" data-v="Tahm Kench">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/TahmKench.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Tahm Kench <span class="tenue">×28</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="DELUHI" title="DELUHI">DELUHI</td>
+          <td data-v="3">
+<span class="badge" style="background: #ffdf7f">B</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="46.678">46,7</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="30">30</td>
+          <td data-v="0.5">50,0%</td>
+          <td data-v="7.3">7,3 / 9,1 / 23,3</td>
+          <td data-v="3.358974358974359">3,36</td>
+          <td data-v="0.7059427290629994">70,6%</td>
+          <td data-v="0.2246368972071406">22,5%</td>
+          <td data-v="1871.8898601392334">1872</td>
+          <td data-v="0.16248545702247172">16,2%</td>
+          <td data-v="1023.0666666666667">17:03</td>
+          <td class="sx" data-v="Lissandra">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Lissandra.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Lissandra <span class="tenue">×3</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="Baldorius" title="Baldorius">Baldorius</td>
+          <td data-v="3">
+<span class="badge" style="background: #ffdf7f">B</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="45.523">45,5</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="119">119</td>
+          <td data-v="0.5210084033613446">52,1%</td>
+          <td data-v="9.201680672268907">9,2 / 9,6 / 22,0</td>
+          <td data-v="3.231707317073171">3,23</td>
+          <td data-v="0.6861577858214943">68,6%</td>
+          <td data-v="0.21453837476937335">21,5%</td>
+          <td data-v="1780.1090417215028">1780</td>
+          <td data-v="0.18951509892841029">19,0%</td>
+          <td data-v="1092.3025210084033">18:12</td>
+          <td class="sx" data-v="Ahri">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Ahri.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Ahri <span class="tenue">×5</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="no color" title="no color">no color</td>
+          <td data-v="2">
+<span class="badge" style="background: #ffff7f">C</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="44.857">44,9</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="264">264</td>
+          <td data-v="0.5227272727272727">52,3%</td>
+          <td data-v="10.234848484848484">10,2 / 10,4 / 18,2</td>
+          <td data-v="2.722987672226251">2,72</td>
+          <td data-v="0.6621006249656922">66,2%</td>
+          <td data-v="0.222206617954408">22,2%</td>
+          <td data-v="1831.0679594662336">1831</td>
+          <td data-v="0.24513276005102932">24,5%</td>
+          <td data-v="1072.719696969697">17:53</td>
+          <td class="sx" data-v="Vayne">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Vayne.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Vayne <span class="tenue">×21</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="CoachTRIMO" title="CoachTRIMO">CoachTRIMO</td>
+          <td data-v="2">
+<span class="badge" style="background: #ffff7f">C</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="42.201">42,2</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="190">190</td>
+          <td data-v="0.5105263157894737">51,1%</td>
+          <td data-v="6.8">6,8 / 9,2 / 25,0</td>
+          <td data-v="3.437108708025043">3,44</td>
+          <td data-v="0.7038677115037718">70,4%</td>
+          <td data-v="0.1908112219975142">19,1%</td>
+          <td data-v="1657.1118534239154">1657</td>
+          <td data-v="0.1869905396877474">18,7%</td>
+          <td data-v="1116.078947368421">18:36</td>
+          <td class="sx" data-v="Rell">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Rell <span class="tenue">×9</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="SegAlfredo" title="SegAlfredo">SegAlfredo</td>
+          <td data-v="2">
+<span class="badge" style="background: #ffff7f">C</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="35.083">35,1</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="197">197</td>
+          <td data-v="0.4720812182741117">47,2%</td>
+          <td data-v="7.604060913705584">7,6 / 11,3 / 24,4</td>
+          <td data-v="2.8385791366906474">2,84</td>
+          <td data-v="0.7148486098017108">71,5%</td>
+          <td data-v="0.1894668816191555">18,9%</td>
+          <td data-v="1610.2266813392332">1610</td>
+          <td data-v="0.22983497243054157">23,0%</td>
+          <td data-v="1096.1878172588833">18:16</td>
+          <td class="sx" data-v="Karthus">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Karthus <span class="tenue">×12</span></span>          </td>
+        </tr>
+        <tr>
+          <td class="giocatore" data-v="Shaconiglio" title="Shaconiglio">Shaconiglio</td>
+          <td data-v="1">
+<span class="badge" style="background: #bfff7f">D</span> <span class="segno nuovo" title="Nuovo in classifica">NEW</span>          </td>
+          <td data-v="22.564">22,6</td>
+          <td data-v=""><span class="delta ">–</span></td>
+          <td data-v="176">176</td>
+          <td data-v="0.5113636363636364">51,1%</td>
+          <td data-v="10.744318181818182">10,7 / 11,8 / 16,7</td>
+          <td data-v="2.324675324675325">2,32</td>
+          <td data-v="0.6255391110298457">62,6%</td>
+          <td data-v="0.19771649727831744">19,8%</td>
+          <td data-v="1672.1364864683078">1672</td>
+          <td data-v="0.24723465946967985">24,7%</td>
+          <td data-v="1092.153409090909">18:12</td>
+          <td class="sx" data-v="Tristana">
+<span class="campione"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Tristana.png" alt="" loading="lazy" width="28" height="28" onerror="this.remove()">Tristana <span class="tenue">×10</span></span>          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Punteggio 0–100: ogni statistica è scalata da 0 a 1 rispetto al gruppo (peggiore 0, migliore 1), poi media pesata — vittorie 20% · KDA 20% · kill participation 20% · danni 25% · danni subiti 15%.
+       Tier: S ≥ 75, A ≥ 60, B ≥ 45, C ≥ 30, D sotto. Remake esclusi.</p>
+    <p>Dati: API ufficiale Riot Games · icone: Data Dragon. Questo progetto non è approvato da Riot Games e non riflette le opinioni di Riot Games o di chiunque sia coinvolto nella gestione delle sue proprietà. League of Legends è un marchio di Riot Games, Inc.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var tabella = document.getElementById('statistiche');
+  var corpo = tabella.tBodies[0];
+  var intestazioni = tabella.querySelectorAll('th[data-tipo]');
+
+  function valore(riga, colonna) {
+    return riga.cells[colonna].getAttribute('data-v');
+  }
+
+  function ordina(th) {
+    var colonna = th.cellIndex;
+    var numerico = th.getAttribute('data-tipo') === 'num';
+    var attuale = th.getAttribute('aria-sort');
+    var discendente = attuale ? attuale === 'ascending' : numerico;
+    intestazioni.forEach(function (h) { h.removeAttribute('aria-sort'); });
+    th.setAttribute('aria-sort', discendente ? 'descending' : 'ascending');
+
+    var righe = Array.prototype.slice.call(corpo.rows);
+    righe.sort(function (a, b) {
+      var va = valore(a, colonna), vb = valore(b, colonna);
+      // le celle vuote (es. chi non ha ancora un tier) vanno sempre in fondo
+      if (va === '' && vb === '') return 0;
+      if (va === '') return 1;
+      if (vb === '') return -1;
+      var r = numerico ? parseFloat(va) - parseFloat(vb) : va.localeCompare(vb, 'it', { sensitivity: 'base' });
+      return discendente ? -r : r;
+    });
+    righe.forEach(function (r) { corpo.appendChild(r); });
+  }
+
+  intestazioni.forEach(function (th) {
+    th.addEventListener('click', function () { ordina(th); });
+    th.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ordina(th); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
