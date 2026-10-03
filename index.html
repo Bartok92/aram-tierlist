@@ -230,8 +230,12 @@
   .metodo { background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--raggio); padding: 14px 16px; color: var(--testo); font-size: .92rem; }
   .metodo summary { cursor: pointer; font-weight: 600; }
   .metodo ol { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; max-width: 80ch; }
-  .pesi { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin: 12px 0 4px; max-width: 640px; }
-  .pesi span { display: grid; place-items: center; font: 700 .7rem/1 var(--f-testo); color: #0d1117; white-space: nowrap; overflow: hidden; padding: 0 4px; }
+  .pesi-titolo { margin: 14px 0 6px; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tenue); }
+  .pesi { display: flex; gap: 2px; height: 14px; border-radius: 4px; overflow: hidden; max-width: 760px; }
+  .legenda-pesi { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .86rem; }
+  .legenda-pesi li { display: inline-flex; align-items: center; gap: 7px; }
+  .legenda-pesi i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+  .legenda-pesi strong { font-variant-numeric: tabular-nums; }
 
   /* ---------- profilo ---------- */
   dialog.profilo { width: min(780px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--linea); border-radius: 16px; background: var(--superficie); color: var(--testo); box-shadow: var(--ombra); }
@@ -334,8 +338,8 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>04/10/2026 alle 01:41</strong></span>
-<span class="pillola">Client LoL letto <strong>04/10/2026 alle 01:41</strong></span>      </div>
+        <span class="pillola">Aggiornato <strong>04/10/2026 alle 01:43</strong></span>
+<span class="pillola">Client LoL letto <strong>04/10/2026 alle 01:43</strong></span>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
     <p class="sottotitolo">La classifica di bravura del gruppo, calcolata solo sulle partite personalizzate giocate tra di noi (almeno 2 di noi nella stessa partita). Tocca un giocatore per aprire il suo profilo.</p>
@@ -2325,8 +2329,11 @@ Classifica finale del mese.        </p>
         <li>I voti si sommano con questi pesi e si portano da 0 a 100. Tier: S da 75, A da 60, B da 45, C da 30, D sotto.</li>
         <li>Ogni scheda (l'anno, ogni mese) è una classifica a sé, calcolata solo sulle partite di quel periodo.</li>
       </ol>
-      <div class="pesi" role="img" aria-label="Pesi: vittorie 17%, KDA 17%, kill participation 17%, danni 21%, danni subiti 12%, cure 8%, controllo (CC) 8%">
-<span style="flex: 0.16666666666666666; background: #7fb2ff" title="vittorie 17%">vittorie 17%</span><span style="flex: 0.16666666666666666; background: #ffb347" title="KDA 17%">KDA 17%</span><span style="flex: 0.16666666666666666; background: #8be0a4" title="kill participation 17%">kill participation 17%</span><span style="flex: 0.20833333333333334; background: #ff8fa3" title="danni 21%">danni 21%</span><span style="flex: 0.125; background: #c8a2ff" title="danni subiti 12%">danni subiti 12%</span><span style="flex: 0.08333333333333333; background: #9ae6f0" title="cure 8%">cure 8%</span><span style="flex: 0.08333333333333333; background: #f5d76e" title="controllo (CC) 8%">controllo (CC) 8%</span>      </div>
+      <p class="pesi-titolo">Peso di ogni categoria nel voto</p>
+      <div class="pesi" aria-hidden="true">
+<span style="flex: 0.16666666666666666; background: #7fb2ff" title="vittorie 17%"></span><span style="flex: 0.16666666666666666; background: #ffb347" title="KDA 17%"></span><span style="flex: 0.16666666666666666; background: #8be0a4" title="kill participation 17%"></span><span style="flex: 0.20833333333333334; background: #ff8fa3" title="danni 21%"></span><span style="flex: 0.125; background: #c8a2ff" title="danni subiti 12%"></span><span style="flex: 0.08333333333333333; background: #9ae6f0" title="cure 8%"></span><span style="flex: 0.08333333333333333; background: #f5d76e" title="controllo (CC) 8%"></span>      </div>
+      <ul class="legenda-pesi">
+<li><i style="background: #7fb2ff" aria-hidden="true"></i>vittorie <strong>17%</strong></li><li><i style="background: #ffb347" aria-hidden="true"></i>KDA <strong>17%</strong></li><li><i style="background: #8be0a4" aria-hidden="true"></i>kill participation <strong>17%</strong></li><li><i style="background: #ff8fa3" aria-hidden="true"></i>danni <strong>21%</strong></li><li><i style="background: #c8a2ff" aria-hidden="true"></i>danni subiti <strong>12%</strong></li><li><i style="background: #9ae6f0" aria-hidden="true"></i>cure <strong>8%</strong></li><li><i style="background: #f5d76e" aria-hidden="true"></i>controllo (CC) <strong>8%</strong></li>      </ul>
     </details>
     <p>Dati: client di League of Legends e API ufficiale Riot Games · immagini dei campioni: Data Dragon. Questo progetto non è approvato da Riot Games e non riflette le opinioni di Riot Games o di chiunque sia coinvolto nella gestione delle sue proprietà. League of Legends è un marchio di Riot Games, Inc.</p>
   </footer>
