@@ -251,7 +251,7 @@
   .profilo__corpo { padding: 18px 20px 24px; display: grid; gap: 24px; overflow-y: auto; min-height: 0; }
   .profilo__corpo h3 { margin: 0 0 10px; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); }
   .profilo__corpo p { margin: 8px 0 0; }
-  .cifre { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .cifre { display: grid; grid-template-columns: repeat(auto-fit, minmax(105px, 1fr)); gap: 8px; }
   .cifra { background: var(--superficie-2); border-radius: 10px; padding: 10px 12px; min-width: 0; }
   .cifra b { display: block; font: 800 1.55rem/1.1 var(--f-titoli); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
   .cifra span { font-size: .75rem; color: var(--tenue); }
@@ -321,8 +321,8 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>03/10/2026 alle 23:41</strong></span>
-<span class="pillola">Client LoL letto <strong>03/10/2026 alle 23:41</strong></span>      </div>
+        <span class="pillola">Aggiornato <strong>04/10/2026 alle 00:41</strong></span>
+<span class="pillola">Client LoL letto <strong>04/10/2026 alle 00:41</strong></span>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
     <p class="sottotitolo">La classifica di bravura del gruppo, calcolata solo sulle partite personalizzate giocate tra di noi (almeno 2 di noi nella stessa partita). Tocca un giocatore per aprire il suo profilo.</p>
@@ -453,6 +453,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
               <th data-tipo="num" tabindex="0" title="Danni ai campioni al minuto">DPM</th>
               <th data-tipo="num" tabindex="0" title="Quota dei danni subiti dalla squadra">Subiti</th>
+              <th data-tipo="num" tabindex="0" title="Cure medie a partita (comprese quelle su se stessi)">Cure</th>
+              <th data-tipo="num" tabindex="0" title="Controllo (CC) medio a partita, in secondi">CC</th>
               <th class="sx" data-tipo="testo" tabindex="0" title="Campione più giocato">Campione</th>
             </tr>
           </thead>
@@ -478,6 +480,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.3313787768790376">33,1%</td>
               <td data-v="2416.472844932211">2.416</td>
               <td data-v="0.28602760356531365">28,6%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Yasuo">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Yasuo <span class="tenue">×5</span></span>              </td>
             </tr>
@@ -502,6 +506,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.2806503866327764">28,1%</td>
               <td data-v="1890.2350386692958">1.890</td>
               <td data-v="0.2774491607109189">27,7%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Qiyana">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Qiyana.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Qiyana <span class="tenue">×5</span></span>              </td>
             </tr>
@@ -526,6 +532,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.30375308159560804">30,4%</td>
               <td data-v="1993.115888272165">1.993</td>
               <td data-v="0.29822427298232806">29,8%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Aphelios">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Aphelios.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Aphelios <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -550,6 +558,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.29866420712921693">29,9%</td>
               <td data-v="1804.1022061964297">1.804</td>
               <td data-v="0.3384483201181139">33,8%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Jinx">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Jinx.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Jinx <span class="tenue">×5</span></span>              </td>
             </tr>
@@ -574,6 +584,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.3182357714512683">31,8%</td>
               <td data-v="2009.2171532014763">2.009</td>
               <td data-v="0.3028263353571872">30,3%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Xin Zhao">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/XinZhao.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Xin Zhao <span class="tenue">×4</span></span>              </td>
             </tr>
@@ -598,6 +610,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.26932408295885385">26,9%</td>
               <td data-v="1851.3776889695528">1.851</td>
               <td data-v="0.22915272036847864">22,9%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Ezreal">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Ezreal.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Ezreal <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -622,6 +636,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.25022417366000654">25,0%</td>
               <td data-v="1719.2435930429006">1.719</td>
               <td data-v="0.30118359666702543">30,1%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Karthus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Karthus <span class="tenue">×5</span></span>              </td>
             </tr>
@@ -646,6 +662,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.23704085362699195">23,7%</td>
               <td data-v="1550.3812084022504">1.550</td>
               <td data-v="0.22363970966163627">22,4%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Rell">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Rell <span class="tenue">×4</span></span>              </td>
             </tr>
@@ -670,6 +688,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.22966022668815686">23,0%</td>
               <td data-v="1909.8173460168084">1.910</td>
               <td data-v="0.19387882745764162">19,4%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Kog&#39;Maw">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/KogMaw.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Kog&#39;Maw <span class="tenue">×2</span></span>              </td>
             </tr>
@@ -694,6 +714,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.24568365750187146">24,6%</td>
               <td data-v="1638.8744361934548">1.639</td>
               <td data-v="0.2796946896107586">28,0%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Varus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Varus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Varus <span class="tenue">×5</span></span>              </td>
             </tr>
@@ -1074,6 +1096,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
               <th data-tipo="num" tabindex="0" title="Danni ai campioni al minuto">DPM</th>
               <th data-tipo="num" tabindex="0" title="Quota dei danni subiti dalla squadra">Subiti</th>
+              <th data-tipo="num" tabindex="0" title="Cure medie a partita (comprese quelle su se stessi)">Cure</th>
+              <th data-tipo="num" tabindex="0" title="Controllo (CC) medio a partita, in secondi">CC</th>
               <th class="sx" data-tipo="testo" tabindex="0" title="Campione più giocato">Campione</th>
             </tr>
           </thead>
@@ -1099,6 +1123,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.2980677647084499">29,8%</td>
               <td data-v="2883.4969019528494">2.883</td>
               <td data-v="0.22957738187537133">23,0%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Yasuo">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Yasuo <span class="tenue">×2</span></span>              </td>
             </tr>
@@ -1123,6 +1149,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.256523490912596">25,7%</td>
               <td data-v="2521.8000441506583">2.522</td>
               <td data-v="0.23474062546056995">23,5%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Karthus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Karthus <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -1147,6 +1175,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.2084100622894588">20,8%</td>
               <td data-v="1952.6465366480681">1.953</td>
               <td data-v="0.17859142324814814">17,9%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Milio">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Milio.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Milio <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1171,6 +1201,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.228758164662477">22,9%</td>
               <td data-v="2277.0951069200096">2.277</td>
               <td data-v="0.1894999618844181">18,9%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Varus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Varus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Varus <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1195,6 +1227,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.20031799094084748">20,0%</td>
               <td data-v="1965.5019650397273">1.966</td>
               <td data-v="0.22131485988500565">22,1%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Syndra">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Syndra.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Syndra <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1219,6 +1253,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.19998995008643558">20,0%</td>
               <td data-v="2030.8139404249414">2.031</td>
               <td data-v="0.2747256873893877">27,5%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Olaf">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Olaf.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Olaf <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1243,6 +1279,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.1543569328768068">15,4%</td>
               <td data-v="1445.6981392694252">1.446</td>
               <td data-v="0.21999368462572544">22,0%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Amumu">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Amumu.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Amumu <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1267,6 +1305,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.18092368056992036">18,1%</td>
               <td data-v="1680.159960957386">1.680</td>
               <td data-v="0.22931312265746703">22,9%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Twitch">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Twitch.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Twitch <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1291,6 +1331,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.17161560509646584">17,2%</td>
               <td data-v="1537.1504032438413">1.537</td>
               <td data-v="0.11957829807092787">12,0%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Seraphine">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Seraphine.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Seraphine <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1315,6 +1357,8 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td data-v="0.23736233933304615">23,7%</td>
               <td data-v="2393.362417976918">2.393</td>
               <td data-v="0.21378658138993215">21,4%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Urgot">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Urgot.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Urgot <span class="tenue">×1</span></span>              </td>
             </tr>
@@ -1662,6 +1706,8 @@ Classifica finale del mese.        </p>
               <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
               <th data-tipo="num" tabindex="0" title="Danni ai campioni al minuto">DPM</th>
               <th data-tipo="num" tabindex="0" title="Quota dei danni subiti dalla squadra">Subiti</th>
+              <th data-tipo="num" tabindex="0" title="Cure medie a partita (comprese quelle su se stessi)">Cure</th>
+              <th data-tipo="num" tabindex="0" title="Controllo (CC) medio a partita, in secondi">CC</th>
               <th class="sx" data-tipo="testo" tabindex="0" title="Campione più giocato">Campione</th>
             </tr>
           </thead>
@@ -1687,6 +1733,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.3346552698794233">33,5%</td>
               <td data-v="2370.5360524383777">2.371</td>
               <td data-v="0.2915800843872752">29,2%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Yasuo">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Yasuo <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -1711,6 +1759,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.31568789974808037">31,6%</td>
               <td data-v="1996.3021101836">1.996</td>
               <td data-v="0.3070984360320191">30,7%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Aphelios">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Aphelios.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Aphelios <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -1735,6 +1785,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.2837423900113286">28,4%</td>
               <td data-v="1854.2973687187514">1.854</td>
               <td data-v="0.2819964878052751">28,2%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Qiyana">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Qiyana.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Qiyana <span class="tenue">×4</span></span>              </td>
             </tr>
@@ -1759,6 +1811,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.3063531102754077">30,6%</td>
               <td data-v="1786.4363567760263">1.786</td>
               <td data-v="0.3434137200710016">34,3%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Jinx">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Jinx.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Jinx <span class="tenue">×5</span></span>              </td>
             </tr>
@@ -1783,6 +1837,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.3259052806045933">32,6%</td>
               <td data-v="1986.2561857398878">1.986</td>
               <td data-v="0.312540024511996">31,3%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Xin Zhao">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/XinZhao.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Xin Zhao <span class="tenue">×4</span></span>              </td>
             </tr>
@@ -1807,6 +1863,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.2786954707541454">27,9%</td>
               <td data-v="1835.7978662497812">1.836</td>
               <td data-v="0.23693138146391407">23,7%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Ezreal">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Ezreal.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Ezreal <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -1831,6 +1889,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.24945282869030175">24,9%</td>
               <td data-v="1620.9713745399097">1.621</td>
               <td data-v="0.3093194706923057">30,9%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Xerath">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Xerath.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Xerath <span class="tenue">×3</span></span>              </td>
             </tr>
@@ -1855,6 +1915,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.24179905352012113">24,2%</td>
               <td data-v="1551.3434487774077">1.551</td>
               <td data-v="0.23120781232277868">23,1%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Rell">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Rell <span class="tenue">×4</span></span>              </td>
             </tr>
@@ -1879,6 +1941,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.2547613246252735">25,5%</td>
               <td data-v="2064.5237482659363">2.065</td>
               <td data-v="0.18517387506828037">18,5%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Kog&#39;Maw">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/KogMaw.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Kog&#39;Maw <span class="tenue">×2</span></span>              </td>
             </tr>
@@ -1903,6 +1967,8 @@ Classifica finale del mese.        </p>
               <td data-v="0.2527483822580843">25,3%</td>
               <td data-v="1634.370560764662">1.634</td>
               <td data-v="0.2851908605511177">28,5%</td>
+              <td data-v=""></td>
+              <td data-v=""> s</td>
               <td class="sx" data-v="Varus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Varus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Varus <span class="tenue">×4</span></span>              </td>
             </tr>
@@ -2161,7 +2227,7 @@ Classifica finale del mese.        </p>
       <summary>Come si calcola il punteggio</summary>
       <ol>
         <li>Contano solo sulle partite personalizzate giocate tra di noi, di ARAM e ARAM: Mayhem, con almeno 2 di noi; i remake sono esclusi.</li>
-        <li>Per ogni giocatore si fa la media di vittorie, KDA, kill participation, quota dei danni e quota dei danni subiti della squadra.</li>
+        <li>Per ogni giocatore si fa la media di vittorie, KDA, kill participation e della sua quota sulla squadra di danni, danni subiti, cure e controllo (CC). Le cure comprendono anche quelle su se stessi, perché Riot non separa quelle date agli alleati; gli scudi sugli alleati non sono disponibili per queste partite.</li>
         <li>Ogni statistica diventa un voto da 0 a 1 rispetto al gruppo: il peggiore del gruppo vale 0 e il migliore 1.</li>
         <li>I voti si sommano con questi pesi e si portano da 0 a 100. Tier: S da 75, A da 60, B da 45, C da 30, D sotto.</li>
         <li>Ogni scheda (l'anno, ogni mese) è una classifica a sé, calcolata solo sulle partite di quel periodo.</li>
@@ -2368,7 +2434,8 @@ Classifica finale del mese.        </p>
 
     corpo.textContent = '';
     var cifre = figli(el('div', 'cifre'), [
-      ['Partite', String(p.partite)], ['Vittorie', p.winrate], ['KDA', p.kda], ['Durata media', p.durata]
+      ['Partite', String(p.partite)], ['Vittorie', p.winrate], ['KDA', p.kda], ['Durata media', p.durata],
+      ['Cure a partita', p.cure], ['CC a partita', p.cc]
     ].map(function (c) { return figli(el('div', 'cifra'), [el('b', null, c[1]), el('span', null, c[0])]); }));
     var riepilogo = figli(el('section'), [cifre, el('p', 'tenue', 'Uccisioni / morti / assist medi: ' + p.kda_medio)]);
     if (p.forza.length) {
