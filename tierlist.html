@@ -338,8 +338,8 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>04/10/2026 alle 02:03</strong></span>
-<span class="pillola">Client LoL letto <strong>04/10/2026 alle 02:03</strong></span>      </div>
+        <span class="pillola">Aggiornato <strong>04/10/2026 alle 02:17</strong></span>
+<span class="pillola">Client LoL letto <strong>04/10/2026 alle 02:17</strong></span>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
     <p class="sottotitolo">La classifica di bravura del gruppo, calcolata solo sulle partite personalizzate giocate tra di noi (almeno 2 di noi nella stessa partita). Tocca un giocatore per aprire il suo profilo.</p>
@@ -451,20 +451,20 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
     <div class="blocco">
       <div class="blocco__testa">
         <h3>Classifica</h3>
-        <p class="nota">Medie per partita · tocca un'intestazione per ordinare</p>
+        <p class="nota nota-classifica" data-base="Medie per partita · tocca un'intestazione per vedere la classifica di quella categoria">Medie per partita · tocca un'intestazione per vedere la classifica di quella categoria</p>
       </div>
       <div class="scorri">
         <table class="classifica">
           <thead>
             <tr>
               <th class="giocatore" data-tipo="testo" tabindex="0">Giocatore</th>
-              <th data-tipo="num" tabindex="0">Tier</th>
-              <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio da 0 a 100">Punti</th>
-              <th data-tipo="num" tabindex="0" title="Variazione del punteggio">Δ</th>
+              <th data-tipo="num" tabindex="0" data-classifica="generale">Tier</th>
+              <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio da 0 a 100" data-classifica="generale">Punti</th>
+              <th data-tipo="num" tabindex="0" title="Variazione del punteggio" data-classifica="generale">Δ</th>
               <th class="sx" data-tipo="num" tabindex="0" title="Ultime partite, dalla più vecchia alla più recente">Forma</th>
               <th data-tipo="num" tabindex="0">Partite</th>
               <th data-tipo="num" tabindex="0" title="Percentuale di vittorie">Vittorie</th>
-              <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi">K / D / A</th>
+              <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi (ordina per uccisioni)" data-nome="uccisioni">K / D / A</th>
               <th data-tipo="num" tabindex="0" title="(uccisioni + assist) / morti">KDA</th>
               <th data-tipo="num" tabindex="0" title="Kill participation: in quante uccisioni della squadra eri coinvolto">KP</th>
               <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
@@ -475,7 +475,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
             </tr>
           </thead>
           <tbody>
-            <tr data-profilo="anno|g3">
+            <tr data-profilo="anno|g3" data-classificato="1" data-pos="1">
               <td class="giocatore" data-v="Cicca">
                 <button type="button" class="chi" data-profilo="anno|g3" title="Apri il profilo di Cicca">
                   <span class="pos p1">1</span>
@@ -500,7 +500,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Yasuo">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Yasuo <span class="tenue">×5</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g4">
+            <tr data-profilo="anno|g4" data-classificato="1" data-pos="2">
               <td class="giocatore" data-v="Goodluck Perez">
                 <button type="button" class="chi" data-profilo="anno|g4" title="Apri il profilo di Goodluck Perez">
                   <span class="pos p2">2</span>
@@ -525,7 +525,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Qiyana">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Qiyana.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Qiyana <span class="tenue">×5</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g7">
+            <tr data-profilo="anno|g7" data-classificato="1" data-pos="3">
               <td class="giocatore" data-v="Dalmarus">
                 <button type="button" class="chi" data-profilo="anno|g7" title="Apri il profilo di Dalmarus">
                   <span class="pos p3">3</span>
@@ -550,7 +550,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Aphelios">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Aphelios.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Aphelios <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g1">
+            <tr data-profilo="anno|g1" data-classificato="1" data-pos="4">
               <td class="giocatore" data-v="no color">
                 <button type="button" class="chi" data-profilo="anno|g1" title="Apri il profilo di no color">
                   <span class="pos">4</span>
@@ -575,7 +575,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Jinx">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Jinx.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Jinx <span class="tenue">×5</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g2">
+            <tr data-profilo="anno|g2" data-classificato="1" data-pos="5">
               <td class="giocatore" data-v="Eredis">
                 <button type="button" class="chi" data-profilo="anno|g2" title="Apri il profilo di Eredis">
                   <span class="pos">5</span>
@@ -600,7 +600,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Xin Zhao">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/XinZhao.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Xin Zhao <span class="tenue">×4</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g5">
+            <tr data-profilo="anno|g5" data-classificato="1" data-pos="6">
               <td class="giocatore" data-v="CoachTRIMO">
                 <button type="button" class="chi" data-profilo="anno|g5" title="Apri il profilo di CoachTRIMO">
                   <span class="pos">6</span>
@@ -625,7 +625,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Rell">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Rell <span class="tenue">×4</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g6">
+            <tr data-profilo="anno|g6" data-classificato="1" data-pos="7">
               <td class="giocatore" data-v="SegAlfredo">
                 <button type="button" class="chi" data-profilo="anno|g6" title="Apri il profilo di SegAlfredo">
                   <span class="pos">7</span>
@@ -650,7 +650,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Karthus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Karthus <span class="tenue">×5</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g9">
+            <tr data-profilo="anno|g9" data-classificato="1" data-pos="8">
               <td class="giocatore" data-v="Baldorius">
                 <button type="button" class="chi" data-profilo="anno|g9" title="Apri il profilo di Baldorius">
                   <span class="pos">8</span>
@@ -675,7 +675,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Ezreal">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Ezreal.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Ezreal <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g10">
+            <tr data-profilo="anno|g10" data-classificato="1" data-pos="9">
               <td class="giocatore" data-v="DELUHI">
                 <button type="button" class="chi" data-profilo="anno|g10" title="Apri il profilo di DELUHI">
                   <span class="pos">9</span>
@@ -700,7 +700,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Kog&#39;Maw">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/KogMaw.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Kog&#39;Maw <span class="tenue">×2</span></span>              </td>
             </tr>
-            <tr data-profilo="anno|g8">
+            <tr data-profilo="anno|g8" data-classificato="1" data-pos="10">
               <td class="giocatore" data-v="Shaconiglio">
                 <button type="button" class="chi" data-profilo="anno|g8" title="Apri il profilo di Shaconiglio">
                   <span class="pos">10</span>
@@ -1117,20 +1117,20 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
     <div class="blocco">
       <div class="blocco__testa">
         <h3>Classifica</h3>
-        <p class="nota">Medie per partita · tocca un'intestazione per ordinare</p>
+        <p class="nota nota-classifica" data-base="Medie per partita · tocca un'intestazione per vedere la classifica di quella categoria">Medie per partita · tocca un'intestazione per vedere la classifica di quella categoria</p>
       </div>
       <div class="scorri">
         <table class="classifica">
           <thead>
             <tr>
               <th class="giocatore" data-tipo="testo" tabindex="0">Giocatore</th>
-              <th data-tipo="num" tabindex="0">Tier</th>
-              <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio da 0 a 100">Punti</th>
-              <th data-tipo="num" tabindex="0" title="Variazione del punteggio">Δ</th>
+              <th data-tipo="num" tabindex="0" data-classifica="generale">Tier</th>
+              <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio da 0 a 100" data-classifica="generale">Punti</th>
+              <th data-tipo="num" tabindex="0" title="Variazione del punteggio" data-classifica="generale">Δ</th>
               <th class="sx" data-tipo="num" tabindex="0" title="Ultime partite, dalla più vecchia alla più recente">Forma</th>
               <th data-tipo="num" tabindex="0">Partite</th>
               <th data-tipo="num" tabindex="0" title="Percentuale di vittorie">Vittorie</th>
-              <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi">K / D / A</th>
+              <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi (ordina per uccisioni)" data-nome="uccisioni">K / D / A</th>
               <th data-tipo="num" tabindex="0" title="(uccisioni + assist) / morti">KDA</th>
               <th data-tipo="num" tabindex="0" title="Kill participation: in quante uccisioni della squadra eri coinvolto">KP</th>
               <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
@@ -1141,7 +1141,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
             </tr>
           </thead>
           <tbody>
-            <tr data-profilo="mese|g3">
+            <tr data-profilo="mese|g3" data-classificato="1" data-pos="1">
               <td class="giocatore" data-v="Cicca">
                 <button type="button" class="chi" data-profilo="mese|g3" title="Apri il profilo di Cicca">
                   <span class="pos p1">1</span>
@@ -1166,7 +1166,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Yasuo">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Yasuo <span class="tenue">×2</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g2">
+            <tr data-profilo="mese|g2" data-classificato="1" data-pos="2">
               <td class="giocatore" data-v="Eredis">
                 <button type="button" class="chi" data-profilo="mese|g2" title="Apri il profilo di Eredis">
                   <span class="pos p2">2</span>
@@ -1191,7 +1191,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Warwick">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Warwick.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Warwick <span class="tenue">×1</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g6">
+            <tr data-profilo="mese|g6" data-classificato="1" data-pos="3">
               <td class="giocatore" data-v="SegAlfredo">
                 <button type="button" class="chi" data-profilo="mese|g6" title="Apri il profilo di SegAlfredo">
                   <span class="pos p3">3</span>
@@ -1216,7 +1216,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Karthus">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Karthus <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g7">
+            <tr data-profilo="mese|g7" data-classificato="1" data-pos="4">
               <td class="giocatore" data-v="Dalmarus">
                 <button type="button" class="chi" data-profilo="mese|g7" title="Apri il profilo di Dalmarus">
                   <span class="pos">4</span>
@@ -1241,7 +1241,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Syndra">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Syndra.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Syndra <span class="tenue">×1</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g1">
+            <tr data-profilo="mese|g1" data-classificato="1" data-pos="5">
               <td class="giocatore" data-v="no color">
                 <button type="button" class="chi" data-profilo="mese|g1" title="Apri il profilo di no color">
                   <span class="pos">5</span>
@@ -1266,7 +1266,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Olaf">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Olaf.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Olaf <span class="tenue">×1</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g9">
+            <tr data-profilo="mese|g9" data-classificato="1" data-pos="6">
               <td class="giocatore" data-v="Baldorius">
                 <button type="button" class="chi" data-profilo="mese|g9" title="Apri il profilo di Baldorius">
                   <span class="pos">6</span>
@@ -1291,7 +1291,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Milio">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Milio.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Milio <span class="tenue">×1</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g10">
+            <tr data-profilo="mese|g10" data-classificato="1" data-pos="7">
               <td class="giocatore" data-v="DELUHI">
                 <button type="button" class="chi" data-profilo="mese|g10" title="Apri il profilo di DELUHI">
                   <span class="pos">7</span>
@@ -1316,7 +1316,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Kayle">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Kayle.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Kayle <span class="tenue">×2</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g8">
+            <tr data-profilo="mese|g8" data-classificato="1" data-pos="8">
               <td class="giocatore" data-v="Shaconiglio">
                 <button type="button" class="chi" data-profilo="mese|g8" title="Apri il profilo di Shaconiglio">
                   <span class="pos">8</span>
@@ -1341,7 +1341,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Twitch">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Twitch.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Twitch <span class="tenue">×1</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g5">
+            <tr data-profilo="mese|g5" data-classificato="0" data-pos="">
               <td class="giocatore" data-v="CoachTRIMO">
                 <button type="button" class="chi" data-profilo="mese|g5" title="Apri il profilo di CoachTRIMO">
                   <span class="pos">–</span>
@@ -1366,7 +1366,7 @@ Le frecce ▲▼ compariranno quando la classifica cambierà.
               <td class="sx" data-v="Seraphine">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Seraphine.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Seraphine <span class="tenue">×1</span></span>              </td>
             </tr>
-            <tr data-profilo="mese|g4">
+            <tr data-profilo="mese|g4" data-classificato="0" data-pos="">
               <td class="giocatore" data-v="Goodluck Perez">
                 <button type="button" class="chi" data-profilo="mese|g4" title="Apri il profilo di Goodluck Perez">
                   <span class="pos">–</span>
@@ -1761,20 +1761,20 @@ Classifica finale del mese.        </p>
     <div class="blocco">
       <div class="blocco__testa">
         <h3>Classifica</h3>
-        <p class="nota">Medie per partita · tocca un'intestazione per ordinare</p>
+        <p class="nota nota-classifica" data-base="Medie per partita · tocca un'intestazione per vedere la classifica di quella categoria">Medie per partita · tocca un'intestazione per vedere la classifica di quella categoria</p>
       </div>
       <div class="scorri">
         <table class="classifica">
           <thead>
             <tr>
               <th class="giocatore" data-tipo="testo" tabindex="0">Giocatore</th>
-              <th data-tipo="num" tabindex="0">Tier</th>
-              <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio da 0 a 100">Punti</th>
-              <th data-tipo="num" tabindex="0" title="Variazione del punteggio">Δ</th>
+              <th data-tipo="num" tabindex="0" data-classifica="generale">Tier</th>
+              <th data-tipo="num" tabindex="0" aria-sort="descending" title="Punteggio da 0 a 100" data-classifica="generale">Punti</th>
+              <th data-tipo="num" tabindex="0" title="Variazione del punteggio" data-classifica="generale">Δ</th>
               <th class="sx" data-tipo="num" tabindex="0" title="Ultime partite, dalla più vecchia alla più recente">Forma</th>
               <th data-tipo="num" tabindex="0">Partite</th>
               <th data-tipo="num" tabindex="0" title="Percentuale di vittorie">Vittorie</th>
-              <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi">K / D / A</th>
+              <th data-tipo="num" tabindex="0" title="Uccisioni / morti / assist medi (ordina per uccisioni)" data-nome="uccisioni">K / D / A</th>
               <th data-tipo="num" tabindex="0" title="(uccisioni + assist) / morti">KDA</th>
               <th data-tipo="num" tabindex="0" title="Kill participation: in quante uccisioni della squadra eri coinvolto">KP</th>
               <th data-tipo="num" tabindex="0" title="Quota dei danni ai campioni della squadra">Danni</th>
@@ -1785,7 +1785,7 @@ Classifica finale del mese.        </p>
             </tr>
           </thead>
           <tbody>
-            <tr data-profilo="mese-2026-09|g3">
+            <tr data-profilo="mese-2026-09|g3" data-classificato="1" data-pos="1">
               <td class="giocatore" data-v="Cicca">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g3" title="Apri il profilo di Cicca">
                   <span class="pos p1">1</span>
@@ -1810,7 +1810,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Yasuo">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Yasuo <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g7">
+            <tr data-profilo="mese-2026-09|g7" data-classificato="1" data-pos="2">
               <td class="giocatore" data-v="Dalmarus">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g7" title="Apri il profilo di Dalmarus">
                   <span class="pos p2">2</span>
@@ -1835,7 +1835,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Aphelios">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Aphelios.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Aphelios <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g4">
+            <tr data-profilo="mese-2026-09|g4" data-classificato="1" data-pos="3">
               <td class="giocatore" data-v="Goodluck Perez">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g4" title="Apri il profilo di Goodluck Perez">
                   <span class="pos p3">3</span>
@@ -1860,7 +1860,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Qiyana">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Qiyana.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Qiyana <span class="tenue">×4</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g1">
+            <tr data-profilo="mese-2026-09|g1" data-classificato="1" data-pos="4">
               <td class="giocatore" data-v="no color">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g1" title="Apri il profilo di no color">
                   <span class="pos">4</span>
@@ -1885,7 +1885,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Jinx">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Jinx.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Jinx <span class="tenue">×5</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g2">
+            <tr data-profilo="mese-2026-09|g2" data-classificato="1" data-pos="5">
               <td class="giocatore" data-v="Eredis">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g2" title="Apri il profilo di Eredis">
                   <span class="pos">5</span>
@@ -1910,7 +1910,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Xin Zhao">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/XinZhao.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Xin Zhao <span class="tenue">×4</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g5">
+            <tr data-profilo="mese-2026-09|g5" data-classificato="1" data-pos="6">
               <td class="giocatore" data-v="CoachTRIMO">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g5" title="Apri il profilo di CoachTRIMO">
                   <span class="pos">6</span>
@@ -1935,7 +1935,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Rell">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Rell <span class="tenue">×4</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g6">
+            <tr data-profilo="mese-2026-09|g6" data-classificato="1" data-pos="7">
               <td class="giocatore" data-v="SegAlfredo">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g6" title="Apri il profilo di SegAlfredo">
                   <span class="pos">7</span>
@@ -1960,7 +1960,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Xerath">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Xerath.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Xerath <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g9">
+            <tr data-profilo="mese-2026-09|g9" data-classificato="1" data-pos="8">
               <td class="giocatore" data-v="Baldorius">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g9" title="Apri il profilo di Baldorius">
                   <span class="pos">8</span>
@@ -1985,7 +1985,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Ezreal">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Ezreal.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Ezreal <span class="tenue">×3</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g10">
+            <tr data-profilo="mese-2026-09|g10" data-classificato="1" data-pos="9">
               <td class="giocatore" data-v="DELUHI">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g10" title="Apri il profilo di DELUHI">
                   <span class="pos">9</span>
@@ -2010,7 +2010,7 @@ Classifica finale del mese.        </p>
               <td class="sx" data-v="Kog&#39;Maw">
 <span class="campione-cella"><img src="https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/KogMaw.png" alt="" loading="lazy" width="24" height="24" onerror="this.remove()">Kog&#39;Maw <span class="tenue">×2</span></span>              </td>
             </tr>
-            <tr data-profilo="mese-2026-09|g8">
+            <tr data-profilo="mese-2026-09|g8" data-classificato="1" data-pos="10">
               <td class="giocatore" data-v="Shaconiglio">
                 <button type="button" class="chi" data-profilo="mese-2026-09|g8" title="Apri il profilo di Shaconiglio">
                   <span class="pos">10</span>
@@ -2447,6 +2447,13 @@ Classifica finale del mese.        </p>
   document.querySelectorAll('table.classifica').forEach(function (tabella) {
     var corpoTabella = tabella.tBodies[0];
     var intestazioni = tabella.querySelectorAll('th[data-tipo]');
+    var nota = tabella.closest('.blocco').querySelector('.nota-classifica');
+    function valore(riga, colonna) { return riga.cells[colonna].getAttribute('data-v'); }
+    function mettiPosizione(riga, pos) {
+      var segno = riga.querySelector('.chi .pos');
+      segno.textContent = pos || '–';
+      segno.className = 'pos' + (pos && pos <= 3 ? ' p' + pos : '');
+    }
     function ordina(th) {
       var colonna = th.cellIndex;
       var numerico = th.getAttribute('data-tipo') === 'num';
@@ -2454,16 +2461,36 @@ Classifica finale del mese.        </p>
       var discendente = attuale ? attuale === 'ascending' : numerico;
       intestazioni.forEach(function (h) { h.removeAttribute('aria-sort'); });
       th.setAttribute('aria-sort', discendente ? 'descending' : 'ascending');
-      var righe = Array.prototype.slice.call(corpoTabella.rows);
-      righe.sort(function (a, b) {
-        var va = a.cells[colonna].getAttribute('data-v'), vb = b.cells[colonna].getAttribute('data-v');
+      function confronta(a, b) {
+        var va = valore(a, colonna), vb = valore(b, colonna);
         if (va === '' && vb === '') return 0;  // le celle vuote vanno sempre in fondo
         if (va === '') return 1;
         if (vb === '') return -1;
         var r = numerico ? parseFloat(va) - parseFloat(vb) : va.localeCompare(vb, 'it', { sensitivity: 'base' });
         return discendente ? -r : r;
+      }
+      // chi non è ancora in classifica (troppe poche partite) sta sempre in fondo e non ha posizione
+      var righe = Array.prototype.slice.call(corpoTabella.rows);
+      var dentro = righe.filter(function (r) { return r.getAttribute('data-classificato') === '1'; }).sort(confronta);
+      var fuori = righe.filter(function (r) { return r.getAttribute('data-classificato') !== '1'; }).sort(confronta);
+      dentro.concat(fuori).forEach(function (r) { corpoTabella.appendChild(r); });
+
+      // la posizione mostrata: generale (punti, tier) oppure nella categoria scelta, solo tra chi è in classifica
+      var perCategoria = numerico && th.getAttribute('data-classifica') !== 'generale';
+      dentro.forEach(function (r) {
+        if (!perCategoria) { mettiPosizione(r, parseInt(r.getAttribute('data-pos'), 10)); return; }
+        var v = valore(r, colonna);
+        if (v === '') { mettiPosizione(r, null); return; }
+        var migliori = dentro.filter(function (o) { var w = valore(o, colonna); return w !== '' && parseFloat(w) > parseFloat(v); });
+        mettiPosizione(r, migliori.length + 1);  // a pari valore, pari posizione
       });
-      righe.forEach(function (r) { corpoTabella.appendChild(r); });
+      fuori.forEach(function (r) { mettiPosizione(r, null); });
+      if (nota) {
+        var nome = th.getAttribute('data-nome') || th.textContent.replace(/[▲▼]/g, '').trim();
+        nota.textContent = perCategoria
+          ? 'Classifica per ' + nome + ': posizioni solo tra chi è in classifica · chi ha troppe poche partite è in fondo'
+          : nota.getAttribute('data-base');
+      }
     }
     intestazioni.forEach(function (th) {
       th.addEventListener('click', function () { ordina(th); });
