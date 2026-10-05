@@ -54,11 +54,11 @@
     --oro: #b8860b; --argento: #8a94a1; --bronzo: #a8642f; --ombra: 0 18px 50px rgba(18, 24, 38, .18);
     color-scheme: light;
   }
-  :root { --blu: #5b9bff; --rosso: #ff6262; --blu-tenue: rgba(91, 155, 255, .14); --rosso-tenue: rgba(255, 98, 98, .14); }
+  :root { --blu: #5b9bff; --rosso: #ff6262; --blu-tenue: rgba(91, 155, 255, .14); --rosso-tenue: rgba(255, 98, 98, .14); --verde: #3fbf7f; --giallo: #e0b13a; }
   @media (prefers-color-scheme: light) {
-    :root:not([data-theme="dark"]) { --blu: #1f63d6; --rosso: #d33a3a; --blu-tenue: rgba(31, 99, 214, .09); --rosso-tenue: rgba(211, 58, 58, .09); }
+    :root:not([data-theme="dark"]) { --blu: #1f63d6; --rosso: #d33a3a; --blu-tenue: rgba(31, 99, 214, .09); --rosso-tenue: rgba(211, 58, 58, .09); --verde: #1b8a50; --giallo: #9a6c00; }
   }
-  :root[data-theme="light"] { --blu: #1f63d6; --rosso: #d33a3a; --blu-tenue: rgba(31, 99, 214, .09); --rosso-tenue: rgba(211, 58, 58, .09); }
+  :root[data-theme="light"] { --blu: #1f63d6; --rosso: #d33a3a; --blu-tenue: rgba(31, 99, 214, .09); --rosso-tenue: rgba(211, 58, 58, .09); --verde: #1b8a50; --giallo: #9a6c00; }
 
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -132,13 +132,39 @@
   .panchina__chi { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
   .panchina__chi .avatar { width: 30px; height: 30px; }
 
-  .bilancia { display: grid; gap: 6px; }
+  .bilancia { display: grid; gap: 8px; }
+  .probabilita { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 10px; }
+  .probabilita__lato { font: 800 1.7rem/1 var(--f-titoli); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+  .probabilita__lato small { display: block; font: 600 .74rem/1.3 var(--f-testo); letter-spacing: .06em; color: var(--tenue); }
+  .probabilita__lato.blu { color: var(--blu); }
+  .probabilita__lato.rossa { color: var(--rosso); text-align: right; }
+  .verdetto { justify-self: center; padding: 4px 12px; border-radius: 999px; font-size: .8rem; font-weight: 700; white-space: nowrap;
+    background: var(--superficie-2); color: var(--testo); border: 1px solid var(--linea); }
+  .verdetto.equilibrata { border-color: var(--verde); color: var(--verde); }
+  .verdetto.leggera { border-color: var(--giallo); color: var(--giallo); }
+  .verdetto.sbilanciata { border-color: var(--rosso); color: var(--rosso); }
   .bilancia__barra { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; }
+  .bilancia__barra span { transition: flex-grow .3s ease; }
   .bilancia__barra .b { background: var(--blu); } .bilancia__barra .r { background: var(--rosso); }
   .bilancia__testo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-size: .9rem; color: var(--tenue); }
   .bilancia__testo strong { color: var(--testo); }
   .azioni { display: flex; flex-wrap: wrap; gap: 8px; }
   .metodo { margin: 0; color: var(--tenue); font-size: .84rem; max-width: 82ch; }
+
+  .spiega { border: 1px solid var(--linea); border-radius: var(--raggio); background: var(--superficie); }
+  .spiega summary { cursor: pointer; padding: 11px 14px; font-weight: 600; font-size: .92rem; }
+  .spiega summary:hover { color: var(--accento); }
+  .spiega__corpo { padding: 0 14px 14px; display: grid; gap: 10px; font-size: .86rem; color: var(--tenue); }
+  .spiega__corpo p { margin: 0; max-width: 82ch; }
+  .spiega__corpo strong { color: var(--testo); }
+  .formula { font-family: ui-monospace, Consolas, monospace; font-size: .82rem; background: var(--superficie-2); padding: 8px 10px; border-radius: 8px; color: var(--testo); overflow-wrap: anywhere; }
+  .tabella-contenitore { overflow-x: auto; }
+  .tabella { width: 100%; border-collapse: collapse; font-size: .85rem; font-variant-numeric: tabular-nums; color: var(--testo); }
+  .tabella th, .tabella td { padding: 6px 8px; text-align: right; border-bottom: 1px solid var(--linea); white-space: nowrap; }
+  .tabella th { font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--tenue); font-weight: 700; }
+  .tabella th:first-child, .tabella td:first-child { text-align: left; white-space: normal; }
+  .tabella td.usato { font-weight: 700; }
+  .tabella .piccolo-testo { color: var(--tenue); font-size: .78rem; }
 
   @media (max-width: 640px) {
     .pagina { padding-inline: 16px; padding-block: 16px 40px; gap: 22px; }
@@ -154,6 +180,12 @@
     .membri li { padding-inline: 12px; gap: 8px; }
     .membri .nome { white-space: normal; overflow-wrap: break-word; }
     .crea { justify-self: stretch; }
+    .probabilita__lato { font-size: 1.4rem; }
+    .verdetto { font-size: .72rem; padding: 3px 9px; }
+    .tabella { font-size: .8rem; }
+    .tabella th, .tabella td { padding: 6px 4px; }
+    .tabella th { white-space: normal; font-size: .64rem; letter-spacing: .03em; }
+    .tabella .piccolo-testo { display: block; font-size: .7rem; }
   }
   @media (prefers-reduced-motion: reduce) { .giocatore { transition: none; } }
 </style>
@@ -166,7 +198,7 @@
       <a class="indietro" href="tierlist.html">← Torna alla classifica</a>
     </div>
     <h1 class="titolo">Match<span>making</span></h1>
-    <p class="sottotitolo">Tocca chi è disponibile: il sistema propone due squadre con lo stesso numero di giocatori e la somma degli score più vicina possibile. Per ogni giocatore conta lo score di ottobre; chi non ce l'ha ancora usa quello dell'anno.</p>
+    <p class="sottotitolo">Tocca chi è disponibile: il sistema propone due squadre con lo stesso numero di giocatori e la somma degli score più vicina possibile. Lo score di ognuno unisce ottobre e l'anno: più partite ha giocato nel mese, più conta il mese. Per ogni proposta c'è anche la probabilità di vittoria, stimata dalle vostre partite.</p>
   </header>
 
   <section class="blocco" aria-labelledby="titolo-presenti">
@@ -181,6 +213,19 @@
     <div class="giocatori" id="giocatori"></div>
     <button type="button" class="crea" id="crea" disabled>Trova le squadre</button>
     <p class="avviso" id="avviso">Scegli almeno 2 giocatori.</p>
+    <details class="spiega">
+      <summary>Da dove viene lo score di ognuno</summary>
+      <div class="spiega__corpo">
+        <p>Lo score del mese da solo, con poche partite, cambia molto da una sera all'altra; quello dell'anno è più stabile ma meno aggiornato. Per questo si fa una <strong>media pesata sulle partite</strong> giocate nel mese (lo score dell'anno "vale" come 15 partite):</p>
+        <p class="formula">score = (partite del mese × score del mese + 15 × score dell'anno) ÷ (partite del mese + 15)</p>
+        <p id="esempio-score" hidden></p>
+        <div class="tabella-contenitore"><table class="tabella" id="tabella-score">
+          <thead><tr><th>Giocatore</th><th>Ottobre</th><th>Anno</th><th>Peso mese</th><th>Score</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+        <p>Chi nel mese non è ancora in classifica (meno di 5 partite) usa solo l'anno; chi non ha nessuno score vale 50. Il tier sulla carta è quello dello score usato.</p>
+      </div>
+    </details>
   </section>
 
   <section class="blocco" id="risultato" aria-labelledby="titolo-squadre" hidden>
@@ -197,14 +242,31 @@
     </div>
     <div class="panchina" id="panchina" hidden><span class="panchina__titolo">In panchina</span></div>
     <div class="bilancia" aria-live="polite">
+      <div class="probabilita">
+        <span class="probabilita__lato blu"><small>Vince la blu</small><span id="prob-blu"></span></span>
+        <span class="verdetto" id="verdetto"></span>
+        <span class="probabilita__lato rossa"><small>Vince la rossa</small><span id="prob-rossa"></span></span>
+      </div>
       <div class="bilancia__barra" aria-hidden="true"><span class="b" id="barra-blu"></span><span class="r" id="barra-rossa"></span></div>
       <div class="bilancia__testo"><span id="differenza"></span><span id="opzione"></span></div>
     </div>
-    <p class="metodo">Come funziona (versione 1): le squadre hanno sempre lo stesso numero di giocatori, al massimo 5 contro 5; se i disponibili sono dispari, uno resta in panchina. Il sistema prova tutte le combinazioni possibili (chi gioca, chi sta in panchina e chi va in quale squadra) e propone quelle in cui la differenza tra le somme degli score è più piccola. "Altra combinazione" mostra le successive, che possono cambiare anche chi resta fuori.</p>
+    <p class="metodo">Come funziona: le squadre hanno sempre lo stesso numero di giocatori, al massimo 5 contro 5; se i disponibili sono dispari, uno resta in panchina. Il sistema prova tutte le combinazioni possibili (chi gioca, chi sta in panchina e chi va in quale squadra) e propone quelle in cui la differenza tra le somme degli score è più piccola. "Altra combinazione" mostra le successive, che possono cambiare anche chi resta fuori.</p>
+    <details class="spiega">
+      <summary>Come è stimata la probabilità di vittoria</summary>
+      <div class="spiega__corpo">
+        <p id="calibrazione-testo"></p>
+        <div class="tabella-contenitore" id="calibrazione-tabella-box"><table class="tabella" id="calibrazione-tabella">
+          <thead><tr><th>Differenza media a giocatore</th><th>Partite</th><th>Ha vinto la favorita</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+        <p id="calibrazione-curva"></p>
+        <p>È una stima: in ARAM i campioni sono casuali e la fortuna conta. Si aggiorna da sola ogni ora con le nuove partite.</p>
+      </div>
+    </details>
   </section>
 </main>
 
-<script type="application/json" id="dati-matchmaking">{"etichetta": "Road to HERO!", "giocatori": [{"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Nautilus.png", "id": "g1", "nome": "no color", "partite": 14, "punti": 39.62, "tier": "C"}, {"colore": "#ffdf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Varus.png", "id": "g2", "nome": "Eredis", "partite": 14, "punti": 52.61, "tier": "B"}, {"colore": "#ffbf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png", "id": "g3", "nome": "Cicca", "partite": 14, "punti": 66.77, "tier": "A"}, {"colore": "#ffdf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Amumu.png", "id": "g4", "nome": "Goodluck Perez", "partite": 8, "punti": 57.45, "tier": "B"}, {"colore": "#ffbf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png", "id": "g5", "nome": "CoachTRIMO", "partite": 5, "punti": 61.11, "tier": "A"}, {"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png", "id": "g6", "nome": "SegAlfredo", "partite": 12, "punti": 35.31, "tier": "C"}, {"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Syndra.png", "id": "g7", "nome": "Dalmarus", "partite": 14, "punti": 42.62, "tier": "C"}, {"colore": "#bfff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Sett.png", "id": "g8", "nome": "Shaconiglio", "partite": 12, "punti": 20.11, "tier": "D"}, {"colore": "#bfff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Milio.png", "id": "g9", "nome": "Baldorius", "partite": 6, "punti": 28.72, "tier": "D"}, {"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Swain.png", "id": "g10", "nome": "DELUHI", "partite": 13, "punti": 39.87, "tier": "C"}], "max_per_squadra": 5, "mese_nome": "ottobre"}</script>
+<script type="application/json" id="dati-matchmaking">{"calibrazione": {"fasce": [{"a": 5, "da": 0, "partite": 21, "vinte": 11}, {"a": 10, "da": 5, "partite": 19, "vinte": 15}, {"a": 20, "da": 10, "partite": 37, "vinte": 24}, {"a": null, "da": 20, "partite": 5, "vinte": 5}], "partite": 82, "pendenza": 0.0696, "stimata": true}, "etichetta": "Road to HERO!", "giocatori": [{"anno": {"partite": 91, "punti": 53.69}, "colore": "#ffdf7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Nautilus.png", "id": "g1", "mese": {"partite": 14, "punti": 39.62}, "nome": "no color", "punti": 46.9, "quota_mese": 0.483, "tier": "B"}, {"anno": {"partite": 84, "punti": 49.42}, "colore": "#ffdf7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Varus.png", "id": "g2", "mese": {"partite": 14, "punti": 52.61}, "nome": "Eredis", "punti": 50.96, "quota_mese": 0.483, "tier": "B"}, {"anno": {"partite": 75, "punti": 81.4}, "colore": "#ffbf7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png", "id": "g3", "mese": {"partite": 14, "punti": 66.77}, "nome": "Cicca", "punti": 74.34, "quota_mese": 0.483, "tier": "A"}, {"anno": {"partite": 64, "punti": 63.7}, "colore": "#ffbf7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Amumu.png", "id": "g4", "mese": {"partite": 8, "punti": 57.45}, "nome": "Goodluck Perez", "punti": 61.53, "quota_mese": 0.348, "tier": "A"}, {"anno": {"partite": 60, "punti": 49.04}, "colore": "#ffdf7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png", "id": "g5", "mese": {"partite": 5, "punti": 61.11}, "nome": "CoachTRIMO", "punti": 52.06, "quota_mese": 0.25, "tier": "B"}, {"anno": {"partite": 61, "punti": 40.8}, "colore": "#ffff7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png", "id": "g6", "mese": {"partite": 12, "punti": 35.31}, "nome": "SegAlfredo", "punti": 38.36, "quota_mese": 0.444, "tier": "C"}, {"anno": {"partite": 66, "punti": 61.68}, "colore": "#ffdf7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Syndra.png", "id": "g7", "mese": {"partite": 14, "punti": 42.62}, "nome": "Dalmarus", "punti": 52.48, "quota_mese": 0.483, "tier": "B"}, {"anno": {"partite": 67, "punti": 16.74}, "colore": "#bfff7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Sett.png", "id": "g8", "mese": {"partite": 12, "punti": 20.11}, "nome": "Shaconiglio", "punti": 18.24, "quota_mese": 0.444, "tier": "D"}, {"anno": {"partite": 45, "punti": 40.46}, "colore": "#ffff7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Milio.png", "id": "g9", "mese": {"partite": 6, "punti": 28.72}, "nome": "Baldorius", "punti": 37.11, "quota_mese": 0.286, "tier": "C"}, {"anno": {"partite": 31, "punti": 34.91}, "colore": "#ffff7f", "fonte": "misto", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Swain.png", "id": "g10", "mese": {"partite": 13, "punti": 39.87}, "nome": "DELUHI", "punti": 37.21, "quota_mese": 0.464, "tier": "C"}], "max_per_squadra": 5, "mese_nome": "ottobre", "peso_anno": 15.0, "senza_score": 50.0}</script>
 <script>
 (function () {
   'use strict';
@@ -212,7 +274,8 @@
   var CHIAVE = 'aram-matchmaking-disponibili';
   var ALTERNATIVE = 5;
   var MAX = dati.max_per_squadra;
-  var SENZA_SCORE = 50;  // chi non ha ancora nessuno score conta come un giocatore medio
+  var SENZA_SCORE = dati.senza_score;  // chi non ha ancora nessuno score conta come un giocatore medio
+  var CAL = dati.calibrazione;         // curva della probabilità: P = 1 / (1 + e^(−pendenza × differenza media))
 
   var presenti = {};
   var soluzioni = [], scelta = 0;
@@ -234,8 +297,12 @@
   function score(g) { return g.punti === null ? SENZA_SCORE : g.punti; }
   function fonte(g) {
     if (!g.fonte) return el('span', 'fonte', 'nessuno score');
-    return el('span', 'fonte' + (g.fonte === 'mese' ? ' mese' : ''), g.fonte === 'mese' ? dati.mese_nome : 'anno');
+    if (g.fonte === 'anno') return el('span', 'fonte', 'anno');
+    return el('span', 'fonte mese', g.fonte === 'misto' ? 'mese + anno' : dati.mese_nome);
   }
+  function probabilita(differenzaMedia) { return 1 / (1 + Math.exp(-CAL.pendenza * differenzaMedia)); }
+  function percento(p) { return Math.round(100 * p) + '%'; }
+  function ilPercento(p) { var t = percento(p); return (/^(8|11)/.test(t) ? "l'" : 'il ') + t; }  // "il 67%", "l'80%"
   function badge(g) {
     var b = el('span', 'badge', g.tier || '–');
     if (g.colore) b.style.background = g.colore;
@@ -251,6 +318,55 @@
     dati.giocatori.forEach(function (g) { presenti[g.id] = Array.isArray(salvati) ? salvati.indexOf(g.id) !== -1 : true; });
   }
   function scelti() { return dati.giocatori.filter(function (g) { return presenti[g.id]; }); }
+
+  // ---------- da dove viene lo score ----------
+  function disegnaTabellaScore() {
+    var corpo = document.querySelector('#tabella-score tbody');
+    dati.giocatori.slice().sort(function (a, b) { return score(b) - score(a); }).forEach(function (g) {
+      var tr = el('tr');
+      var mese = el('td', null, g.mese ? numero(g.mese.punti) + ' ' : '–');
+      if (g.mese) mese.appendChild(el('span', 'piccolo-testo', '(' + g.mese.partite + ' p.)'));
+      tr.append(el('td', null, g.nome), mese, el('td', null, g.anno ? numero(g.anno.punti) : '–'),
+                el('td', null, g.fonte ? Math.round(100 * g.quota_mese) + '%' : '–'),
+                el('td', 'usato', numero(score(g))));
+      corpo.appendChild(tr);
+    });
+    // esempio con i numeri veri: chi ha giocato meno partite nel mese tra quelli con score misto
+    var misti = dati.giocatori.filter(function (g) { return g.fonte === 'misto'; });
+    if (misti.length) {
+      var g = misti.sort(function (a, b) { return a.mese.partite - b.mese.partite; })[0], peso = Math.round(dati.peso_anno);
+      var esempio = document.getElementById('esempio-score');
+      esempio.textContent = 'Esempio: ' + g.nome + ' ha ' + g.mese.partite + ' partite a ' + dati.mese_nome + ' → ('
+        + g.mese.partite + ' × ' + numero(g.mese.punti) + ' + ' + peso + ' × ' + numero(g.anno.punti) + ') ÷ ('
+        + g.mese.partite + ' + ' + peso + ') = ' + numero(g.punti) + '. Il mese pesa il ' + Math.round(100 * g.quota_mese) + '%.';
+      esempio.hidden = false;
+    }
+  }
+
+  // ---------- come è stimata la probabilità ----------
+  function disegnaCalibrazione() {
+    var testo = document.getElementById('calibrazione-testo');
+    if (CAL.stimata) {
+      testo.textContent = 'La probabilità viene dalle vostre ' + CAL.partite + ' partite personalizzate con una squadra favorita: '
+        + 'per ognuna lo score di tutti è stato ricalcolato usando solo le partite giocate prima (come se le squadre si facessero quel giorno), '
+        + 'poi si è guardato se ha vinto la squadra con lo score medio più alto.';
+    } else {
+      testo.textContent = 'Le partite sono ancora poche (' + CAL.partite + ') per una stima affidabile: per ora si usa una curva prudente. '
+        + 'Dalle 20 partite in poi la curva viene calcolata sui vostri risultati.';
+    }
+    var corpo = document.querySelector('#calibrazione-tabella tbody');
+    CAL.fasce.forEach(function (f) {
+      var tr = el('tr');
+      var nome = f.a === null ? f.da + ' punti o più' : f.da === 0 ? 'meno di ' + f.a + ' punti' : 'da ' + f.da + ' a ' + f.a + ' punti';
+      tr.append(el('td', null, nome), el('td', null, String(f.partite)),
+                el('td', null, f.partite ? f.vinte + ' volte (' + Math.round(100 * f.vinte / f.partite) + '%)' : '–'));
+      corpo.appendChild(tr);
+    });
+    document.getElementById('calibrazione-tabella-box').hidden = !CAL.fasce.some(function (f) { return f.partite; });
+    document.getElementById('calibrazione-curva').textContent = 'Curva usata: con 5 punti di differenza media a giocatore la favorita vince '
+      + ilPercento(probabilita(5)) + ', con 10 punti ' + ilPercento(probabilita(10)) + ', con 20 punti ' + ilPercento(probabilita(20))
+      + '. Con differenza 0 è 50 e 50.';
+  }
 
   // ---------- chi è disponibile ----------
   var griglia = document.getElementById('giocatori');
@@ -287,7 +403,7 @@
   document.getElementById('tutti').addEventListener('click', function () { dati.giocatori.forEach(function (g) { presenti[g.id] = true; }); salva(); aggiorna(); });
   document.getElementById('nessuno').addEventListener('click', function () { dati.giocatori.forEach(function (g) { presenti[g.id] = false; }); salva(); aggiorna(); risultato.hidden = true; });
 
-  // ---------- versione 1: somma degli score ----------
+  // ---------- bilanciamento: somma degli score ----------
   // Ogni disponibile va in blu, in rossa o in panchina; si tengono solo le combinazioni con
   // k giocatori per squadra e si ordinano per differenza tra le somme.
   function combinazioni(giocatori) {
@@ -346,15 +462,27 @@
       panchina.appendChild(chi);
     });
     panchina.hidden = s.fuori.length === 0;
-    var totale = l.pb + l.pr || 1;
-    document.getElementById('barra-blu').style.flex = String(l.pb / totale);
-    document.getElementById('barra-rossa').style.flex = String(l.pr / totale);
+    var p = esito(l);
+    document.getElementById('prob-blu').textContent = p.blu + '%';
+    document.getElementById('prob-rossa').textContent = p.rossa + '%';
+    var verdetto = document.getElementById('verdetto');
+    var favorita = Math.max(p.blu, p.rossa);
+    verdetto.className = 'verdetto ' + (favorita <= 55 ? 'equilibrata' : favorita <= 65 ? 'leggera' : 'sbilanciata');
+    verdetto.textContent = favorita <= 55 ? 'Equilibrata' : favorita <= 65 ? 'Poco sbilanciata' : 'Sbilanciata';
+    document.getElementById('barra-blu').style.flex = String(p.blu);
+    document.getElementById('barra-rossa').style.flex = String(p.rossa);
     var diff = document.getElementById('differenza');
     diff.textContent = '';
     diff.append(document.createTextNode('Differenza tra le somme: '), el('strong', null, numero(s.diff) + ' punti'),
-                document.createTextNode(' (' + numero(100 * s.diff / totale) + '% del totale)'));
+                document.createTextNode(' (' + numero(s.diff / l.blu.length) + ' a giocatore)'));
     document.getElementById('opzione').textContent = soluzioni.length > 1 ? 'Opzione ' + (scelta + 1) + ' di ' + soluzioni.length : 'Unica combinazione possibile';
     document.getElementById('altra').hidden = soluzioni.length < 2;
+  }
+
+  // probabilità di vittoria (in %, la somma fa 100) dalla differenza tra gli score medi
+  function esito(l) {
+    var blu = Math.round(100 * probabilita(l.pb / l.blu.length - l.pr / l.rossa.length));
+    return { blu: blu, rossa: 100 - blu };
   }
 
   function trova() {
@@ -374,7 +502,8 @@
     var testo = (dati.etichetta ? dati.etichetta + ' — ' : '') + l.blu.length + ' contro ' + l.rossa.length + '\n'
       + '🔵 Blu (' + numero(l.pb) + '): ' + elenco(l.blu) + '\n'
       + '🔴 Rossa (' + numero(l.pr) + '): ' + elenco(l.rossa)
-      + (s.fuori.length ? '\n🪑 Panchina: ' + elenco(s.fuori) : '');
+      + (s.fuori.length ? '\n🪑 Panchina: ' + elenco(s.fuori) : '')
+      + '\n📊 Probabilità di vittoria: blu ' + esito(l).blu + '% – rossa ' + esito(l).rossa + '%';
     function fatto() { copia.textContent = 'Copiate!'; setTimeout(function () { copia.textContent = 'Copia le squadre'; }, 2000); }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(testo).then(fatto, function () { window.prompt('Copia le squadre:', testo); });
@@ -384,6 +513,8 @@
   });
 
   carica();
+  disegnaTabellaScore();
+  disegnaCalibrazione();
   aggiorna();
 })();
 </script>
