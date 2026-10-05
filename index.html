@@ -13,6 +13,7 @@
 <style>
   /* Layout: il programma di una lega tra amici. Testata da tabellone, muro dei tier,
      classifica da campionato, poi premi, record, coppie e albo d'oro. */
+  /* Colori e caratteri comuni a tutte le pagine (tema scuro; chiaro se il dispositivo lo chiede) */
   :root {
     --sfondo: #0b0f17;
     --superficie: #131a26;
@@ -53,7 +54,6 @@
     --oro: #b8860b; --argento: #8a94a1; --bronzo: #a8642f; --ombra: 0 18px 50px rgba(18, 24, 38, .18);
     color-scheme: light;
   }
-
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--sfondo); color: var(--testo); font: 15px/1.5 var(--f-testo); }
@@ -95,6 +95,8 @@
   }
   .condividi { margin-left: auto; border: 1px solid var(--linea); background: var(--superficie); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: .85rem; font-weight: 600; }
   .condividi:hover { border-color: var(--accento); }
+  .vai-squadre { margin-left: auto; text-decoration: none; color: var(--su-accento); background: var(--accento); border-color: var(--accento); }
+  .vai-squadre + .condividi { margin-left: 0; }
 
   /* ---------- sezione di un periodo ---------- */
   .vista { display: grid; gap: 30px; padding-top: 26px; }
@@ -338,7 +340,7 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>05/10/2026 alle 14:33</strong></span>
+        <span class="pillola">Aggiornato <strong>05/10/2026 alle 14:43</strong></span>
 <span class="pillola">Client LoL letto <strong>05/10/2026 alle 01:16</strong></span>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
@@ -359,6 +361,7 @@
         <select id="scelta-mese">
 <option value="mese">Ottobre 2026 · in corso</option><option value="mese-2026-09">Settembre 2026</option>        </select>
       </div>
+      <a class="condividi vai-squadre" href="squadre.html">Crea squadre</a>
       <button type="button" class="condividi" id="condividi">Copia il link</button>
     </nav>
   </header>
