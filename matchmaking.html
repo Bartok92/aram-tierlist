@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matchmaking · Tier list ARAM</title>
+<meta name="description" content="Segna chi è disponibile: il matchmaking propone due squadre di pari numero con la somma degli score più vicina possibile.">
+<meta name="theme-color" content="#0b0f17">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff7a3d'/><text x='50' y='72' font-size='62' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23160a03'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Layout: lo spogliatoio prima della partita. Chi è disponibile (carte da toccare), poi le due
+     squadre affiancate come i due lati della mappa, blu e rossa, la panchina e la bilancia dei punti. */
+  /* Colori e caratteri comuni a tutte le pagine (tema scuro; chiaro se il dispositivo lo chiede) */
+  :root {
+    --sfondo: #0b0f17;
+    --superficie: #131a26;
+    --superficie-2: #1a2333;
+    --linea: #263146;
+    --testo: #eef2f8;
+    --tenue: #97a3b8;
+    --accento: #ff7a3d;
+    --su-accento: #1b0c04;
+    --accento-tenue: rgba(255, 122, 61, .15);
+    --vittoria: #46c588;
+    --sconfitta: #ff6b6b;
+    --nuovo: #72a9ff;
+    --oro: #e8b73d;
+    --argento: #b9c2cd;
+    --bronzo: #cf8c55;
+    --su-tier: #15171c;
+    --ombra: 0 18px 50px rgba(0, 0, 0, .45);
+    --f-titoli: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --f-testo: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --raggio: 12px;
+    --chip: 88px;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --sfondo: #eef1f6; --superficie: #ffffff; --superficie-2: #f3f5f9; --linea: #d6dce6;
+      --testo: #121826; --tenue: #566175; --accento: #d9480f; --su-accento: #ffffff;
+      --accento-tenue: rgba(217, 72, 15, .09); --vittoria: #1e8f53; --sconfitta: #d0393c; --nuovo: #2563eb;
+      --oro: #b8860b; --argento: #8a94a1; --bronzo: #a8642f; --ombra: 0 18px 50px rgba(18, 24, 38, .18);
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --sfondo: #eef1f6; --superficie: #ffffff; --superficie-2: #f3f5f9; --linea: #d6dce6;
+    --testo: #121826; --tenue: #566175; --accento: #d9480f; --su-accento: #ffffff;
+    --accento-tenue: rgba(217, 72, 15, .09); --vittoria: #1e8f53; --sconfitta: #d0393c; --nuovo: #2563eb;
+    --oro: #b8860b; --argento: #8a94a1; --bronzo: #a8642f; --ombra: 0 18px 50px rgba(18, 24, 38, .18);
+    color-scheme: light;
+  }
+  :root { --blu: #5b9bff; --rosso: #ff6262; --blu-tenue: rgba(91, 155, 255, .14); --rosso-tenue: rgba(255, 98, 98, .14); }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) { --blu: #1f63d6; --rosso: #d33a3a; --blu-tenue: rgba(31, 99, 214, .09); --rosso-tenue: rgba(211, 58, 58, .09); }
+  }
+  :root[data-theme="light"] { --blu: #1f63d6; --rosso: #d33a3a; --blu-tenue: rgba(31, 99, 214, .09); --rosso-tenue: rgba(211, 58, 58, .09); }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--sfondo); color: var(--testo); font: 15px/1.5 var(--f-testo); }
+  [hidden] { display: none !important; }
+  img { max-width: 100%; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
+  .tenue { color: var(--tenue); }
+  .pagina { max-width: 1100px; margin: 0 auto; padding-inline: 20px; padding-block: 26px 56px; display: grid; gap: 28px; }
+
+  .testata { display: grid; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--linea); }
+  .testata__barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+  .occhiello { margin: 0; font-size: .74rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accento); }
+  .indietro { font-size: .85rem; font-weight: 600; color: var(--testo); text-decoration: none; border: 1px solid var(--linea); background: var(--superficie); border-radius: 999px; padding: 7px 14px; }
+  .indietro:hover { border-color: var(--accento); }
+  .titolo { margin: 0; font: 800 clamp(2.6rem, 8vw, 4.8rem)/.9 var(--f-titoli); text-transform: uppercase; }
+  .titolo span { color: var(--accento); }
+  .sottotitolo { margin: 0; color: var(--tenue); max-width: 68ch; }
+
+  .blocco { display: grid; gap: 14px; }
+  .blocco__testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+  .blocco__testa h2 { margin: 0; font: 800 1.6rem/1 var(--f-titoli); text-transform: uppercase; letter-spacing: .02em; }
+  .comandi { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .piccolo { border: 1px solid var(--linea); background: var(--superficie); border-radius: 999px; padding: 6px 13px; font-size: .85rem; font-weight: 600; cursor: pointer; }
+  .piccolo:hover { border-color: var(--accento); }
+  .conteggio { font-size: .9rem; color: var(--tenue); }
+  .conteggio strong { color: var(--testo); font: 800 1.2rem var(--f-titoli); }
+
+  .giocatori { display: grid; grid-template-columns: repeat(auto-fill, minmax(235px, 1fr)); gap: 8px; }
+  .giocatore { position: relative; display: grid; grid-template-columns: 48px 1fr auto; gap: 2px 12px; align-items: center; text-align: left; padding: 10px 12px; cursor: pointer;
+    background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--raggio); transition: border-color .12s ease, background .12s ease; }
+  .giocatore:hover { border-color: var(--tenue); }
+  .giocatore[aria-pressed="true"] { border-color: var(--accento); background: linear-gradient(120deg, var(--accento-tenue), transparent 70%), var(--superficie); }
+  .giocatore[aria-pressed="false"] .avatar { filter: grayscale(1); opacity: .55; }
+  .giocatore[aria-pressed="false"] .nome { color: var(--tenue); }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; grid-row: span 2; background: var(--superficie-2); display: block; }
+  .nome { font: 800 1.15rem/1.05 var(--f-titoli); text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dettaglio { font-size: .8rem; color: var(--tenue); font-variant-numeric: tabular-nums; }
+  .fonte { display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; background: var(--superficie-2); color: var(--tenue); margin-left: 4px; vertical-align: 1px; }
+  .fonte.mese { background: var(--accento-tenue); color: var(--accento); }
+  .badge { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 7px; color: var(--su-tier); font: 800 1.05rem/1 var(--f-titoli); grid-row: span 2; background: #5b6274; }
+  .spunta { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: var(--accento); color: var(--su-accento); display: none; place-items: center; font: 800 .75rem/1 var(--f-testo); box-shadow: 0 0 0 2px var(--sfondo); }
+  .giocatore[aria-pressed="true"] .spunta { display: grid; }
+
+  .crea { justify-self: start; border: 0; border-radius: 12px; padding: 13px 26px; cursor: pointer; background: var(--accento); color: var(--su-accento); font: 800 1.35rem/1 var(--f-titoli); text-transform: uppercase; letter-spacing: .03em; }
+  .crea:disabled { opacity: .45; cursor: not-allowed; }
+  .avviso { margin: 0; color: var(--tenue); font-size: .88rem; }
+
+  .formato { font: 800 1.15rem/1 var(--f-titoli); text-transform: uppercase; color: var(--tenue); letter-spacing: .04em; }
+  .formato strong { color: var(--testo); }
+  .squadre { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .squadra { border: 1px solid var(--linea); border-radius: var(--raggio); background: var(--superficie); overflow: hidden; }
+  .squadra__testa { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--linea); }
+  .squadra__nome { font: 800 1.5rem/1 var(--f-titoli); text-transform: uppercase; letter-spacing: .03em; }
+  .squadra__punti { text-align: right; font-size: .8rem; color: var(--tenue); }
+  .squadra__punti .riga { display: block; white-space: nowrap; }
+  .squadra__punti strong { display: block; font: 800 1.6rem/1 var(--f-titoli); color: var(--testo); font-variant-numeric: tabular-nums; }
+  .squadra.blu { border-top: 4px solid var(--blu); } .squadra.blu .squadra__testa { background: var(--blu-tenue); } .squadra.blu .squadra__nome { color: var(--blu); }
+  .squadra.rossa { border-top: 4px solid var(--rosso); } .squadra.rossa .squadra__testa { background: var(--rosso-tenue); } .squadra.rossa .squadra__nome { color: var(--rosso); }
+  .membri { list-style: none; margin: 0; padding: 6px 0; }
+  .membri li { display: grid; grid-template-columns: 40px 1fr auto auto; gap: 10px; align-items: center; padding: 7px 16px; }
+  .membri .avatar { width: 40px; height: 40px; grid-row: auto; }
+  .membri .badge { grid-row: auto; min-width: 26px; height: 26px; font-size: .95rem; }
+  .membri .punti { font: 800 1.15rem/1 var(--f-titoli); font-variant-numeric: tabular-nums; min-width: 42px; text-align: right; }
+  .membri .nome { font-size: 1.05rem; }
+  .membri .nome .fonte { font-family: var(--f-testo); }
+
+  .panchina { border: 1px dashed var(--linea); border-radius: var(--raggio); padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+  .panchina__titolo { font: 800 1.1rem/1 var(--f-titoli); text-transform: uppercase; color: var(--tenue); letter-spacing: .03em; }
+  .panchina__chi { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .panchina__chi .avatar { width: 30px; height: 30px; }
+
+  .bilancia { display: grid; gap: 6px; }
+  .bilancia__barra { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; }
+  .bilancia__barra .b { background: var(--blu); } .bilancia__barra .r { background: var(--rosso); }
+  .bilancia__testo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-size: .9rem; color: var(--tenue); }
+  .bilancia__testo strong { color: var(--testo); }
+  .azioni { display: flex; flex-wrap: wrap; gap: 8px; }
+  .metodo { margin: 0; color: var(--tenue); font-size: .84rem; max-width: 82ch; }
+
+  @media (max-width: 640px) {
+    .pagina { padding-inline: 16px; padding-block: 16px 40px; gap: 22px; }
+    .squadre { grid-template-columns: 1fr; }
+    .giocatori { grid-template-columns: 1fr 1fr; }
+    .giocatore { grid-template-columns: 40px 1fr; gap: 2px 10px; padding: 9px 10px; }
+    .giocatore .avatar { width: 40px; height: 40px; grid-column: 1; grid-row: 1 / 3; }
+    .giocatore .dettaglio { grid-column: 2; grid-row: 2; }
+    /* il tier diventa un bollino sull'angolo dell'avatar: il nome ha tutta la larghezza */
+    .giocatore .badge { grid-column: 1; grid-row: 1 / 3; align-self: center; justify-self: end; min-width: 20px; height: 20px; padding: 0 4px;
+      font-size: .78rem; border-radius: 6px; transform: translate(6px, 16px); box-shadow: 0 0 0 2px var(--superficie); z-index: 1; }
+    .giocatore .nome { grid-column: 2; grid-row: 1; align-self: end; font-size: .95rem; padding-right: 8px; white-space: normal; overflow-wrap: break-word; min-width: 0; }
+    .membri li { padding-inline: 12px; gap: 8px; }
+    .membri .nome { white-space: normal; overflow-wrap: break-word; }
+    .crea { justify-self: stretch; }
+  }
+  @media (prefers-reduced-motion: reduce) { .giocatore { transition: none; } }
+</style>
+</head>
+<body>
+<main class="pagina">
+  <header class="testata">
+    <div class="testata__barra">
+      <p class="occhiello">Road to HERO! · Tier list ARAM</p>
+      <a class="indietro" href="tierlist.html">← Torna alla classifica</a>
+    </div>
+    <h1 class="titolo">Match<span>making</span></h1>
+    <p class="sottotitolo">Tocca chi è disponibile: il sistema propone due squadre con lo stesso numero di giocatori e la somma degli score più vicina possibile. Per ogni giocatore conta lo score di ottobre; chi non ce l'ha ancora usa quello dell'anno.</p>
+  </header>
+
+  <section class="blocco" aria-labelledby="titolo-presenti">
+    <div class="blocco__testa">
+      <h2 id="titolo-presenti">Chi è disponibile?</h2>
+      <div class="comandi">
+        <button type="button" class="piccolo" id="tutti">Tutti</button>
+        <button type="button" class="piccolo" id="nessuno">Nessuno</button>
+        <span class="conteggio"><strong id="quanti">0</strong> disponibili</span>
+      </div>
+    </div>
+    <div class="giocatori" id="giocatori"></div>
+    <button type="button" class="crea" id="crea" disabled>Trova le squadre</button>
+    <p class="avviso" id="avviso">Scegli almeno 2 giocatori.</p>
+  </section>
+
+  <section class="blocco" id="risultato" aria-labelledby="titolo-squadre" hidden>
+    <div class="blocco__testa">
+      <h2 id="titolo-squadre">Le squadre <span class="formato" id="formato"></span></h2>
+      <div class="azioni">
+        <button type="button" class="piccolo" id="altra">Altra combinazione</button>
+        <button type="button" class="piccolo" id="copia">Copia le squadre</button>
+      </div>
+    </div>
+    <div class="squadre">
+      <div class="squadra blu"><div class="squadra__testa"><span class="squadra__nome">Squadra blu</span><span class="squadra__punti" id="punti-blu"></span></div><ul class="membri" id="membri-blu"></ul></div>
+      <div class="squadra rossa"><div class="squadra__testa"><span class="squadra__nome">Squadra rossa</span><span class="squadra__punti" id="punti-rossa"></span></div><ul class="membri" id="membri-rossa"></ul></div>
+    </div>
+    <div class="panchina" id="panchina" hidden><span class="panchina__titolo">In panchina</span></div>
+    <div class="bilancia" aria-live="polite">
+      <div class="bilancia__barra" aria-hidden="true"><span class="b" id="barra-blu"></span><span class="r" id="barra-rossa"></span></div>
+      <div class="bilancia__testo"><span id="differenza"></span><span id="opzione"></span></div>
+    </div>
+    <p class="metodo">Come funziona (versione 1): le squadre hanno sempre lo stesso numero di giocatori, al massimo 5 contro 5; se i disponibili sono dispari, uno resta in panchina. Il sistema prova tutte le combinazioni possibili (chi gioca, chi sta in panchina e chi va in quale squadra) e propone quelle in cui la differenza tra le somme degli score è più piccola. "Altra combinazione" mostra le successive, che possono cambiare anche chi resta fuori.</p>
+  </section>
+</main>
+
+<script type="application/json" id="dati-matchmaking">{"etichetta": "Road to HERO!", "giocatori": [{"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Nautilus.png", "id": "g1", "nome": "no color", "partite": 14, "punti": 39.62, "tier": "C"}, {"colore": "#ffdf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Varus.png", "id": "g2", "nome": "Eredis", "partite": 14, "punti": 52.61, "tier": "B"}, {"colore": "#ffbf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Yasuo.png", "id": "g3", "nome": "Cicca", "partite": 14, "punti": 66.77, "tier": "A"}, {"colore": "#ffdf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Amumu.png", "id": "g4", "nome": "Goodluck Perez", "partite": 8, "punti": 57.45, "tier": "B"}, {"colore": "#ffbf7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Rell.png", "id": "g5", "nome": "CoachTRIMO", "partite": 5, "punti": 61.11, "tier": "A"}, {"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Karthus.png", "id": "g6", "nome": "SegAlfredo", "partite": 12, "punti": 35.31, "tier": "C"}, {"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Syndra.png", "id": "g7", "nome": "Dalmarus", "partite": 14, "punti": 42.62, "tier": "C"}, {"colore": "#bfff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Sett.png", "id": "g8", "nome": "Shaconiglio", "partite": 12, "punti": 20.11, "tier": "D"}, {"colore": "#bfff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Milio.png", "id": "g9", "nome": "Baldorius", "partite": 6, "punti": 28.72, "tier": "D"}, {"colore": "#ffff7f", "fonte": "mese", "icona": "https://ddragon.leagueoflegends.com/cdn/16.19.1/img/champion/Swain.png", "id": "g10", "nome": "DELUHI", "partite": 13, "punti": 39.87, "tier": "C"}], "max_per_squadra": 5, "mese_nome": "ottobre"}</script>
+<script>
+(function () {
+  'use strict';
+  var dati = JSON.parse(document.getElementById('dati-matchmaking').textContent);
+  var CHIAVE = 'aram-matchmaking-disponibili';
+  var ALTERNATIVE = 5;
+  var MAX = dati.max_per_squadra;
+  var SENZA_SCORE = 50;  // chi non ha ancora nessuno score conta come un giocatore medio
+
+  var presenti = {};
+  var soluzioni = [], scelta = 0;
+
+  function el(tag, classe, testo) {
+    var e = document.createElement(tag);
+    if (classe) e.className = classe;
+    if (testo !== undefined && testo !== null) e.textContent = testo;
+    return e;
+  }
+  function avatar(src) {
+    if (!src) return el('span', 'avatar');
+    var i = document.createElement('img');
+    i.className = 'avatar'; i.src = src; i.alt = ''; i.loading = 'lazy';
+    i.onerror = function () { i.replaceWith(el('span', 'avatar')); };
+    return i;
+  }
+  function numero(v) { return v.toFixed(1).replace('.', ','); }
+  function score(g) { return g.punti === null ? SENZA_SCORE : g.punti; }
+  function fonte(g) {
+    if (!g.fonte) return el('span', 'fonte', 'nessuno score');
+    return el('span', 'fonte' + (g.fonte === 'mese' ? ' mese' : ''), g.fonte === 'mese' ? dati.mese_nome : 'anno');
+  }
+  function badge(g) {
+    var b = el('span', 'badge', g.tier || '–');
+    if (g.colore) b.style.background = g.colore;
+    return b;
+  }
+
+  function salva() {
+    try { localStorage.setItem(CHIAVE, JSON.stringify(Object.keys(presenti).filter(function (k) { return presenti[k]; }))); } catch (e) { /* niente */ }
+  }
+  function carica() {
+    var salvati = null;
+    try { salvati = JSON.parse(localStorage.getItem(CHIAVE)); } catch (e) { salvati = null; }
+    dati.giocatori.forEach(function (g) { presenti[g.id] = Array.isArray(salvati) ? salvati.indexOf(g.id) !== -1 : true; });
+  }
+  function scelti() { return dati.giocatori.filter(function (g) { return presenti[g.id]; }); }
+
+  // ---------- chi è disponibile ----------
+  var griglia = document.getElementById('giocatori');
+  function disegnaGiocatori() {
+    griglia.textContent = '';
+    dati.giocatori.forEach(function (g) {
+      var b = el('button', 'giocatore');
+      b.type = 'button';
+      b.setAttribute('aria-pressed', presenti[g.id] ? 'true' : 'false');
+      b.setAttribute('aria-label', g.nome + ', ' + (presenti[g.id] ? 'disponibile' : 'non disponibile'));
+      var dettaglio = el('span', 'dettaglio', (g.fonte ? numero(g.punti) : numero(SENZA_SCORE)) + ' score');
+      dettaglio.appendChild(fonte(g));
+      b.append(avatar(g.icona), el('span', 'nome', g.nome), badge(g), dettaglio, el('span', 'spunta', '✓'));
+      b.addEventListener('click', function () { presenti[g.id] = !presenti[g.id]; salva(); aggiorna(); });
+      griglia.appendChild(b);
+    });
+  }
+
+  var bottoneCrea = document.getElementById('crea');
+  var avviso = document.getElementById('avviso');
+  var risultato = document.getElementById('risultato');
+  function aggiorna() {
+    disegnaGiocatori();
+    var n = scelti().length, k = Math.min(MAX, Math.floor(n / 2)), fuori = n - 2 * k;
+    document.getElementById('quanti').textContent = n;
+    bottoneCrea.disabled = n < 2;
+    avviso.textContent = n < 2 ? 'Scegli almeno 2 giocatori.'
+      : fuori > 0 ? 'Formato ' + k + ' contro ' + k + ': ' + fuori + (fuori === 1 ? ' giocatore resta' : ' giocatori restano') + ' in panchina.'
+      : 'Formato ' + k + ' contro ' + k + '.';
+    // se le squadre sono già a video, si rifanno subito con i nuovi disponibili
+    if (!risultato.hidden) { if (n < 2) risultato.hidden = true; else trova(); }
+  }
+
+  document.getElementById('tutti').addEventListener('click', function () { dati.giocatori.forEach(function (g) { presenti[g.id] = true; }); salva(); aggiorna(); });
+  document.getElementById('nessuno').addEventListener('click', function () { dati.giocatori.forEach(function (g) { presenti[g.id] = false; }); salva(); aggiorna(); risultato.hidden = true; });
+
+  // ---------- versione 1: somma degli score ----------
+  // Ogni disponibile va in blu, in rossa o in panchina; si tengono solo le combinazioni con
+  // k giocatori per squadra e si ordinano per differenza tra le somme.
+  function combinazioni(giocatori) {
+    var n = giocatori.length, k = Math.min(MAX, Math.floor(n / 2)), tutte = [], posto = new Array(n);
+    function valuta() {
+      var a = [], b = [], fuori = [], sa = 0, sb = 0;
+      for (var i = 0; i < n; i++) {
+        var g = giocatori[i];
+        if (posto[i] === 1) { a.push(g); sa += score(g); }
+        else if (posto[i] === 2) { b.push(g); sb += score(g); }
+        else fuori.push(g);
+      }
+      tutte.push({ a: a, b: b, fuori: fuori, sa: sa, sb: sb, diff: Math.abs(sa - sb) });
+    }
+    function assegna(i, na, nb) {
+      if (na === k && nb === k) { for (var j = i; j < n; j++) posto[j] = 0; valuta(); return; }
+      if (n - i < (k - na) + (k - nb)) return;  // non bastano i giocatori rimasti
+      if (na < k) { posto[i] = 1; assegna(i + 1, na + 1, nb); }
+      if (nb < k && na > 0) { posto[i] = 2; assegna(i + 1, na, nb + 1); }  // il primo in campo sta sempre in A: niente doppioni A/B
+      if (n - i - 1 >= (k - na) + (k - nb)) { posto[i] = 0; assegna(i + 1, na, nb); }
+    }
+    if (k > 0) assegna(0, 0, 0);
+    tutte.sort(function (x, y) { return x.diff - y.diff; });
+    return tutte.slice(0, ALTERNATIVE);
+  }
+
+  function rigaSquadra(g) {
+    var li = el('li');
+    var nome = el('span', 'nome', g.nome);
+    nome.appendChild(fonte(g));
+    li.append(avatar(g.icona), nome, badge(g), el('span', 'punti', numero(score(g))));
+    return li;
+  }
+
+  function lati(s) {
+    // la squadra blu è quella con la somma più alta, così i colori restano stabili tra le opzioni
+    return s.sa >= s.sb ? { blu: s.a, pb: s.sa, rossa: s.b, pr: s.sb } : { blu: s.b, pb: s.sb, rossa: s.a, pr: s.sa };
+  }
+
+  function mostra() {
+    var s = soluzioni[scelta], l = lati(s);
+    document.getElementById('formato').textContent = '· ' + l.blu.length + ' contro ' + l.rossa.length;
+    [['blu', l.blu, l.pb], ['rossa', l.rossa, l.pr]].forEach(function (x) {
+      var lista = document.getElementById('membri-' + x[0]);
+      lista.textContent = '';
+      x[1].slice().sort(function (p, q) { return score(q) - score(p); }).forEach(function (g) { lista.appendChild(rigaSquadra(g)); });
+      var testa = document.getElementById('punti-' + x[0]);
+      testa.textContent = '';
+      testa.append(el('strong', null, numero(x[2])), el('span', 'riga', 'somma degli score'), el('span', 'riga', 'media ' + numero(x[2] / x[1].length)));
+    });
+    var panchina = document.getElementById('panchina');
+    Array.prototype.slice.call(panchina.querySelectorAll('.panchina__chi')).forEach(function (n) { n.remove(); });
+    s.fuori.forEach(function (g) {
+      var chi = el('span', 'panchina__chi');
+      chi.append(avatar(g.icona), document.createTextNode(g.nome + ' (' + numero(score(g)) + ')'));
+      panchina.appendChild(chi);
+    });
+    panchina.hidden = s.fuori.length === 0;
+    var totale = l.pb + l.pr || 1;
+    document.getElementById('barra-blu').style.flex = String(l.pb / totale);
+    document.getElementById('barra-rossa').style.flex = String(l.pr / totale);
+    var diff = document.getElementById('differenza');
+    diff.textContent = '';
+    diff.append(document.createTextNode('Differenza tra le somme: '), el('strong', null, numero(s.diff) + ' punti'),
+                document.createTextNode(' (' + numero(100 * s.diff / totale) + '% del totale)'));
+    document.getElementById('opzione').textContent = soluzioni.length > 1 ? 'Opzione ' + (scelta + 1) + ' di ' + soluzioni.length : 'Unica combinazione possibile';
+    document.getElementById('altra').hidden = soluzioni.length < 2;
+  }
+
+  function trova() {
+    soluzioni = combinazioni(scelti());
+    scelta = 0;
+    risultato.hidden = false;
+    mostra();
+  }
+  bottoneCrea.addEventListener('click', function () { trova(); risultato.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+  document.getElementById('altra').addEventListener('click', function () { scelta = (scelta + 1) % soluzioni.length; mostra(); });
+
+  // ---------- copia per WhatsApp / Discord ----------
+  var copia = document.getElementById('copia');
+  copia.addEventListener('click', function () {
+    var s = soluzioni[scelta], l = lati(s);
+    function elenco(m) { return m.map(function (g) { return g.nome; }).join(', '); }
+    var testo = (dati.etichetta ? dati.etichetta + ' — ' : '') + l.blu.length + ' contro ' + l.rossa.length + '\n'
+      + '🔵 Blu (' + numero(l.pb) + '): ' + elenco(l.blu) + '\n'
+      + '🔴 Rossa (' + numero(l.pr) + '): ' + elenco(l.rossa)
+      + (s.fuori.length ? '\n🪑 Panchina: ' + elenco(s.fuori) : '');
+    function fatto() { copia.textContent = 'Copiate!'; setTimeout(function () { copia.textContent = 'Copia le squadre'; }, 2000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(testo).then(fatto, function () { window.prompt('Copia le squadre:', testo); });
+    } else {
+      window.prompt('Copia le squadre:', testo);
+    }
+  });
+
+  carica();
+  aggiorna();
+})();
+</script>
+</body>
+</html>
