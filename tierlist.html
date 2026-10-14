@@ -339,6 +339,10 @@
   .squadra-partita.vinta h4 { color: var(--vittoria); }
   .squadra-partita.persa h4 { color: var(--sconfitta); }
   .riga-gioc { display: grid; grid-template-columns: 34px 1fr auto; gap: 9px; align-items: center; padding: 6px 7px; border-radius: 9px; }
+  button.riga-gioc { width: 100%; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  button.riga-gioc:hover { background: var(--superficie-2); }
+  button.riga-gioc:hover .gioc-chi b { text-decoration: underline; text-underline-offset: 3px; }
+  .riga-gioc .gioc-chi b .vai { color: var(--tenue); font-weight: 400; margin-left: 4px; }
   .riga-gioc + .riga-gioc { border-top: 1px solid var(--linea); }
   .riga-gioc.io { background: var(--accento-tenue); box-shadow: inset 3px 0 0 var(--accento); }
   .riga-gioc img, .riga-gioc .vuoto { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; background: var(--superficie-2); }
@@ -398,7 +402,7 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>14/10/2026 alle 13:34</strong></span>
+        <span class="pillola">Aggiornato <strong>14/10/2026 alle 14:43</strong></span>
       </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
@@ -3270,6 +3274,17 @@ Classifica finale del mese.        </p>
   var finestraPartita = document.getElementById('partita');
   var corpoPartita = document.getElementById('partita-corpo');
   var profiloAperto = null;  // codice del giocatore del profilo: la sua riga è evidenziata
+  var vistaAperta = null;    // scheda del profilo aperto (anno, mese...): gli altri profili si aprono nella stessa
+  // dalla scheda di una partita al profilo di un altro giocatore, nella stessa classifica se c'è
+  function profiloDaPartita(codice) {
+    finestraPartita.close();
+    if (codice === profiloAperto) return;
+    var vista = dati[vistaAperta] && dati[vistaAperta][codice] ? vistaAperta
+      : Object.keys(dati).filter(function (k) { return dati[k][codice]; })[0];
+    if (!vista) return;
+    if (dialogo.open) dialogo.close();
+    apri(vista, codice);
+  }
   var SERIE = { 2: 'Doppia', 3: 'Tripla', 4: 'Quadra', 5: 'Penta' };
   function corto(n) {
     if (n === null || n === undefined) return '–';
@@ -3334,12 +3349,22 @@ Classifica finale del mese.        </p>
       figli(titolo, [el('span', null, nome + ' · ' + (sq.vinta ? 'vittoria' : 'sconfitta')), el('span', null, sq.kill + ' kill')]);
       box.appendChild(titolo);
       sq.giocatori.forEach(function (x) {
-        var riga = el('div', 'riga-gioc' + (x.id && x.id === profiloAperto ? ' io' : ''));
+        var apribile = x.id && x.nome && x.id !== profiloAperto;
+        var riga = el(apribile ? 'button' : 'div', 'riga-gioc' + (x.id && x.id === profiloAperto ? ' io' : ''));
+        if (apribile) {
+          riga.type = 'button';
+          riga.setAttribute('aria-label', 'Apri il profilo di ' + x.nome);
+          riga.addEventListener('click', function () { profiloDaPartita(x.id); });
+        }
         var chi = el('div', 'gioc-chi');
         var dettagli = corto(x.danni) + ' danni · ' + corto(x.subiti) + ' subiti' + (x.cc ? ' · ' + x.cc + ' CC' : '');
         var camp = campioneDi(x);
-        if (x.nome) figli(chi, [el('b', null, x.nome), el('small', null, camp.nome + ' · ' + dettagli)]);
-        else figli(chi, [el('b', 'estraneo', camp.nome), el('small', null, dettagli)]);
+        if (x.nome) {
+          var nomeG = el('b', null, x.nome);
+          if (apribile) nomeG.appendChild(el('span', 'vai', '›'));
+          figli(chi, [nomeG, el('small', null, camp.nome + ' · ' + dettagli)]);
+        }
+        else { figli(chi, [el('b', 'estraneo', camp.nome), el('small', null, dettagli)]); }
         var kda = el('div', 'kda', x.k + ' / ' + x.d + ' / ' + x.a);
         kda.appendChild(el('small', null, 'KDA ' + rapporto(x)));
         figli(riga, [immagine(camp.icona, ''), chi, kda]);
@@ -3362,6 +3387,7 @@ Classifica finale del mese.        </p>
     var p = dati[chiaveVista] && dati[chiaveVista][giocatore];
     if (!p || typeof dialogo.showModal !== 'function') return;
     profiloAperto = giocatore;
+    vistaAperta = chiaveVista;
 
     var testa = document.getElementById('profilo-testa');
     if (p.splash) testa.style.setProperty('--splash', 'url("' + p.splash + '")');
