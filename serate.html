@@ -163,6 +163,7 @@
   .cartolina .link-gioc { text-decoration: none; }  /* nello screenshot niente sottolineature */
   .cartolina .link-gioc:hover { text-decoration: underline; }
   a.volto { display: inline-flex; border-radius: 50%; }
+  .link-riga { display: inline-flex; align-items: center; gap: 8px; }
   .archivio__data { font-weight: 700; }
   .archivio__titolo { font-size: .8rem; color: var(--tenue); }
   .archivio__mvp { font-size: .8rem; color: var(--oro); font-weight: 600; text-align: right; }
@@ -176,6 +177,9 @@
   .nota { margin: 0; font-size: .8rem; color: var(--tenue); max-width: 76ch; }
   .vuoto-pagina { text-align: center; padding: 40px 16px; color: var(--tenue); }
 
+  @media (max-width: 480px) {
+    th, td { padding: 8px 6px; }  /* sul telefono la tabella dei giocatori sta tutta nello schermo */
+  }
   @media (max-width: 380px) {
     .titolo { font-size: 1.5rem; }
     .testata__nome { font-size: 1.6rem; }
@@ -402,18 +406,16 @@
     bloccoG.appendChild(el('h2', null, 'I giocatori della serata'));
     var scorri = el('div', 'riquadro scorri');
     var t = el('table');
-    t.innerHTML = '<thead><tr><th>Giocatore</th><th>Voto</th><th>Partite</th><th>Vinte</th><th>K / D / A</th></tr></thead>';
+    t.innerHTML = '<thead><tr><th>Giocatore</th><th>Voto</th><th title="Partite giocate">Part.</th><th>Vinte</th><th>K/D/A</th></tr></thead>';
     var corpo = el('tbody');
     s.giocatori.forEach(function (g) {
       var tr = el('tr');
       var td = el('td', 'nome');
-      var collegamento = linkProfilo(g.id, g.nome, s.id, 'volto');
-      figli(collegamento, [avatar(g.icona, g.nome), el('span', null, g.nome)]);
-      collegamento.style.gap = '8px';
-      collegamento.style.alignItems = 'center';
-      td.appendChild(collegamento);
+      // avatar e nome dentro un solo collegamento (il nome una volta sola)
+      var dentro = figli(el('span', 'link-riga'), [avatar(g.icona, g.nome), el('span', null, g.nome)]);
+      td.appendChild(linkProfilo(g.id, g.nome, s.id, null, dentro));
       figli(tr, [td, el('td', null, numero(g.voto)), el('td', null, String(g.partite)), el('td', null, String(g.vittorie)),
-                 el('td', null, g.k + ' / ' + g.d + ' / ' + g.a)]);
+                 el('td', null, g.k + '/' + g.d + '/' + g.a)]);
       corpo.appendChild(tr);
     });
     t.appendChild(corpo);
