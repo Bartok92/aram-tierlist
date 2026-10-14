@@ -363,6 +363,15 @@
   .impatto__delta { font: 800 1.12rem/30px var(--f-titoli); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .impatto__delta.su { color: var(--vittoria); }
   .impatto__delta.giu { color: var(--sconfitta); }
+  /* nelle righe: avatar e nome su due righe, a destra K/D/A e voto sopra, l'impatto (M, A) sotto */
+  .riga-gioc.con-impatto { row-gap: 3px; }
+  .riga-gioc.con-impatto > img, .riga-gioc.con-impatto > .vuoto, .riga-gioc.con-impatto > .gioc-chi { grid-row: 1 / 3; }
+  .impatto-mini { grid-column: 3 / -1; justify-self: end; display: flex; gap: 9px; white-space: nowrap;
+    font-size: .7rem; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--tenue); }
+  .impatto-mini i { font-style: normal; margin-right: 3px; }
+  .impatto-mini b { font-weight: 700; }
+  .impatto-mini .su { color: var(--vittoria); }
+  .impatto-mini .giu { color: var(--sconfitta); }
   .partita__nota { margin: 0; font-size: .74rem; line-height: 1.4; color: var(--tenue); }
   .partita__serata { margin: 0; font-size: .86rem; }
   .partita__serata a { color: var(--accento); font-weight: 600; }
@@ -417,7 +426,7 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>14/10/2026 alle 15:38</strong></span>
+        <span class="pillola">Aggiornato <strong>14/10/2026 alle 15:48</strong></span>
       </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
@@ -3308,23 +3317,39 @@ Classifica finale del mese.        </p>
   function rapporto(x) { return ((x.k + x.a) / Math.max(1, x.d)).toFixed(2).replace('.', ','); }
   function virgola(v) { return v.toFixed(1).replace('.', ','); }
   // quanto una partita ha spostato il punteggio di un periodo: [prima, dopo] -> freccia e % (con i punti sotto)
-  function impatto(etichetta, coppia) {
-    var prima = coppia ? coppia[0] : null, dopo = coppia ? coppia[1] : null;
-    var valore, classe = 'impatto__delta', sotto;
-    if (prima !== null && dopo !== null) {
-      var pct = 100 * (dopo - prima) / prima;
+  function variazione(coppia) {
+    var v = { prima: coppia ? coppia[0] : null, dopo: coppia ? coppia[1] : null, classe: '' };
+    if (v.prima !== null && v.dopo !== null) {
+      var pct = 100 * (v.dopo - v.prima) / v.prima;
       var verso = Math.abs(pct) < 0.05 ? 0 : pct > 0 ? 1 : -1;
-      valore = (verso > 0 ? '▲ ' : verso < 0 ? '▼ ' : '= ') + virgola(Math.abs(pct)) + '%';
-      classe += verso > 0 ? ' su' : verso < 0 ? ' giu' : '';
-      sotto = virgola(prima) + ' → ' + virgola(dopo);
-    } else if (dopo !== null) {
-      valore = 'Entra';
-      sotto = 'in classifica con ' + virgola(dopo);
+      v.testo = (verso > 0 ? '▲ ' : verso < 0 ? '▼ ' : '= ') + virgola(Math.abs(pct)) + '%';
+      v.classe = verso > 0 ? 'su' : verso < 0 ? 'giu' : '';
+      v.dettaglio = virgola(v.prima) + ' → ' + virgola(v.dopo);
+    } else if (v.dopo !== null) {
+      v.testo = 'entra';
+      v.dettaglio = 'in classifica con ' + virgola(v.dopo);
     } else {
-      valore = '–';
-      sotto = 'non ancora in classifica';
+      v.testo = '–';
+      v.dettaglio = 'non ancora in classifica';
     }
-    return figli(el('div', 'impatto'), [el('span', 'titoletto', etichetta), el('b', classe, valore), el('small', null, sotto)]);
+    return v;
+  }
+  function impatto(etichetta, coppia) {
+    var v = variazione(coppia);
+    var valore = v.testo === 'entra' ? 'Entra' : v.testo;
+    return figli(el('div', 'impatto'), [el('span', 'titoletto', etichetta), el('b', 'impatto__delta ' + v.classe, valore),
+                                        el('small', null, v.dettaglio)]);
+  }
+  // nelle righe dei giocatori: "M ▲ 1,5%  A ▼ 0,7%" (mese e anno), il dettaglio nel suggerimento
+  function impattoMini(x, nomeMese) {
+    var box = el('div', 'impatto-mini');
+    [['M', x.mese, 'Classifica di ' + (nomeMese || 'questo mese')], ['A', x.anno, "Classifica dell'anno"]].forEach(function (voce) {
+      var v = variazione(voce[1]);
+      var s = figli(el('span'), [el('i', null, voce[0]), el('b', v.classe, v.testo)]);
+      s.title = voce[2] + ': ' + v.dettaglio;
+      box.appendChild(s);
+    });
+    return box;
   }
   // voto della singola partita (0-100, colore del suo tier): intero nelle righe, con il decimale nella scheda
   function votoGioc(x, decimale) {
@@ -3425,7 +3450,10 @@ Classifica finale del mese.        </p>
         else { figli(chi, [el('b', 'estraneo', camp.nome), el('small', null, dettagli)]); }
         var kda = el('div', 'kda', x.k + ' / ' + x.d + ' / ' + x.a);
         kda.appendChild(el('small', null, 'KDA ' + rapporto(x)));
-        figli(riga, [immagine(camp.icona, ''), chi, kda, g.votati ? (x.voto !== undefined ? votoGioc(x) : el('span')) : null]);
+        var conImpatto = !!(x.mese || x.anno);
+        if (conImpatto) riga.classList.add('con-impatto');
+        figli(riga, [immagine(camp.icona, ''), chi, kda, g.votati ? (x.voto !== undefined ? votoGioc(x) : el('span')) : null,
+                     conImpatto ? impattoMini(x, g.nome_mese) : null]);
         box.appendChild(riga);
       });
       corpoPartita.appendChild(box);
@@ -3434,7 +3462,8 @@ Classifica finale del mese.        </p>
     corpoPartita.appendChild(el('p', 'partita__nota', g.votati
       ? 'Voto della partita: la formula della classifica calcolata solo su questa partita, confrontando tra loro ' +
         'i giocatori del gruppo in campo (qui ' + g.votati + '). 50 = nella media del gruppo; 👑 = il voto più alto.' +
-        (io ? ' Mese e anno: di quanto è cambiato il suo punteggio in quella classifica con questa partita (subito prima → subito dopo).' : '')
+        ' Sotto il voto, M (mese) e A (anno): di quanto la partita ha spostato lo score di ognuno in quella classifica ' +
+        '(▲ sale, ▼ scende; subito prima → subito dopo).'
       : 'Il voto della partita compare quando in campo ci sono almeno 3 giocatori del gruppo.'));
 
     if (g.serata) {
