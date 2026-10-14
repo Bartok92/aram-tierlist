@@ -339,9 +339,14 @@
   .squadra-partita.vinta h4 { color: var(--vittoria); }
   .squadra-partita.persa h4 { color: var(--sconfitta); }
   .riga-gioc { display: grid; grid-template-columns: 34px 1fr auto; gap: 9px; align-items: center; padding: 6px 7px; border-radius: 9px; }
-  button.riga-gioc { width: 100%; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-  button.riga-gioc:hover { background: var(--superficie-2); }
-  button.riga-gioc:hover .gioc-chi b { text-decoration: underline; text-underline-offset: 3px; }
+  .riga-gioc[role="button"] { cursor: pointer; }
+  .riga-gioc[role="button"]:hover { background: var(--superficie-2); }
+  .riga-gioc.io:hover { background: var(--accento-tenue); }
+  .riga-gioc[role="button"]:focus-visible { outline: 2px solid var(--accento); outline-offset: -2px; }
+  /* il nome è un collegamento a parte: apre il profilo (il resto della riga sposta le statistiche in alto) */
+  .riga-gioc .nome-gioc { border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer;
+    text-decoration: underline dotted 1px; text-underline-offset: 3px; }
+  .riga-gioc .nome-gioc:hover, .riga-gioc .nome-gioc:focus-visible { color: var(--accento); text-decoration-style: solid; }
   .riga-gioc .gioc-chi b .vai { color: var(--tenue); font-weight: 400; margin-left: 4px; }
   .riga-gioc + .riga-gioc { border-top: 1px solid var(--linea); }
   .riga-gioc.io { background: var(--accento-tenue); box-shadow: inset 3px 0 0 var(--accento); }
@@ -426,7 +431,7 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>14/10/2026 alle 15:58</strong></span>
+        <span class="pillola">Aggiornato <strong>14/10/2026 alle 16:05</strong></span>
       </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
@@ -3386,44 +3391,58 @@ Classifica finale del mese.        </p>
       corpoPartita.appendChild(ris);
     }
 
-    // le statistiche del giocatore del profilo in questa partita
-    if (io) {
-      var kill = g.squadre[mia].kill || 1;
-      var danniSquadra = g.squadre[mia].giocatori.reduce(function (s, x) { return s + (x.danni || 0); }, 0) || 1;
+    // le statistiche in alto: all'inizio quelle del giocatore del profilo, poi di chi si tocca nelle squadre
+    function schedaStatistiche(x, i) {
+      var squadra = g.squadre[i];
+      var kill = squadra.kill || 1;
+      var danniSquadra = squadra.giocatori.reduce(function (s, y) { return s + (y.danni || 0); }, 0) || 1;
+      var campione = campioneDi(x).nome;
       var voci = [
-        [io.k + ' / ' + io.d + ' / ' + io.a, 'uccisioni / morti / assist'],
-        [rapporto(io), 'KDA'],
-        [Math.round(100 * (io.k + io.a) / kill) + '%', 'kill participation'],
-        [corto(io.danni), 'danni (' + Math.round(100 * io.danni / danniSquadra) + '% squadra)'],
-        [corto(io.subiti), 'danni subiti e ridotti'],
-        [corto(io.cure), 'cure'],
-        [io.cc === null || io.cc === undefined ? '–' : String(io.cc), 'punteggio CC'],
-        [corto(io.oro), 'oro'],
+        [x.k + ' / ' + x.d + ' / ' + x.a, 'uccisioni / morti / assist'],
+        [rapporto(x), 'KDA'],
+        [Math.round(100 * (x.k + x.a) / kill) + '%', 'kill participation'],
+        [corto(x.danni), 'danni (' + Math.round(100 * x.danni / danniSquadra) + '% squadra)'],
+        [corto(x.subiti), 'danni subiti e ridotti'],
+        [corto(x.cure), 'cure'],
+        [x.cc === null || x.cc === undefined ? '–' : String(x.cc), 'punteggio CC'],
+        [corto(x.oro), 'oro'],
       ];
-      io.campione = campioneDi(io).nome;
-      if (io.multikill >= 2) voci.push([SERIE[Math.min(5, io.multikill)] || io.multikill + ' kill', 'serie migliore']);
+      if (x.multikill >= 2) voci.push([SERIE[Math.min(5, x.multikill)] || x.multikill + ' kill', 'serie migliore']);
       var mie = el('div', 'mie');
       voci.forEach(function (v) { figli(mie, [figli(el('div'), [el('b', null, v[0]), el('small', null, v[1])])]); });
       // voto della partita e, accanto, di quanto ha spostato il suo punteggio del mese e dell'anno
-      var votoMio = null;
-      if (io.voto !== undefined || io.mese || io.anno) {
+      var votoBox = null;
+      if (x.voto !== undefined || x.mese || x.anno) {
         var colVoto = el('div', 'impatto');
-        if (io.voto !== undefined) {
+        if (x.voto !== undefined) {
           var classifica = [];
-          g.squadre.forEach(function (sq) { sq.giocatori.forEach(function (x) { if (x.voto !== undefined) classifica.push(x.voto); }); });
-          var posto = 1 + classifica.filter(function (v) { return v > io.voto; }).length;
-          figli(colVoto, [el('span', 'titoletto', io.mvp ? '👑 MVP partita' : 'Voto partita'), votoGioc(io, true),
-                          el('small', null, 'Tier ' + io.tier + ' · ' + posto + '° su ' + g.votati)]);
+          g.squadre.forEach(function (sq) { sq.giocatori.forEach(function (y) { if (y.voto !== undefined) classifica.push(y.voto); }); });
+          var posto = 1 + classifica.filter(function (v) { return v > x.voto; }).length;
+          figli(colVoto, [el('span', 'titoletto', x.mvp ? '👑 MVP partita' : 'Voto partita'), votoGioc(x, true),
+                          el('small', null, 'Tier ' + x.tier + ' · ' + posto + '° su ' + g.votati)]);
         } else {
           figli(colVoto, [el('span', 'titoletto', 'Voto partita'), el('b', 'impatto__delta', '–'), el('small', null, 'servono 3 del gruppo')]);
         }
-        votoMio = figli(el('div', 'voto-partita'), [colVoto,
-          impatto(g.nome_mese || 'Mese', io.mese), impatto('Anno', io.anno)]);
+        votoBox = figli(el('div', 'voto-partita'), [colVoto,
+          impatto(g.nome_mese || 'Mese', x.mese), impatto('Anno', x.anno)]);
       }
-      corpoPartita.appendChild(figli(el('section'), [el('h4', null, 'Le sue statistiche · ' + io.campione), votoMio, mie]));
+      var titolo = x.id && x.id === profiloAperto ? 'Le sue statistiche · ' + campione
+        : x.nome ? 'Statistiche di ' + x.nome + ' · ' + campione
+        : 'Statistiche · ' + campione + (i === mia ? ' (sua squadra)' : mia !== null ? ' (avversari)' : '');
+      return [el('h4', null, titolo), votoBox, mie];
+    }
+    var statistiche = el('section', 'statistiche-partita');
+    corpoPartita.appendChild(statistiche);
+    var righeGioc = [];
+    function metti(x, i, riga, scorri) {
+      statistiche.textContent = '';
+      figli(statistiche, schedaStatistiche(x, i));
+      righeGioc.forEach(function (r) { r.classList.toggle('io', r === riga); r.setAttribute('aria-pressed', String(r === riga)); });
+      if (scorri) statistiche.scrollIntoView({ block: 'start', behavior: 'smooth' });
     }
 
-    // le due squadre, dalla sua
+    // le due squadre, dalla sua: toccando una riga le sue statistiche vanno in alto; il nome apre il profilo
+    var primo = null;
     ordine.forEach(function (i, n) {
       var sq = g.squadre[i];
       var box = el('section', 'squadra-partita ' + (sq.vinta ? 'vinta' : 'persa'));
@@ -3432,19 +3451,31 @@ Classifica finale del mese.        </p>
       figli(titolo, [el('span', null, nome + ' · ' + (sq.vinta ? 'vittoria' : 'sconfitta')), el('span', null, sq.kill + ' kill')]);
       box.appendChild(titolo);
       sq.giocatori.forEach(function (x) {
-        var apribile = x.id && x.nome && x.id !== profiloAperto;
-        var riga = el(apribile ? 'button' : 'div', 'riga-gioc' + (g.votati ? ' con-voto' : '') + (x.id && x.id === profiloAperto ? ' io' : ''));
-        if (apribile) {
-          riga.type = 'button';
-          riga.setAttribute('aria-label', 'Apri il profilo di ' + x.nome);
-          riga.addEventListener('click', function () { profiloDaPartita(x.id); });
-        }
+        var camp = campioneDi(x);
+        var riga = el('div', 'riga-gioc' + (g.votati ? ' con-voto' : ''));
+        riga.tabIndex = 0;
+        riga.setAttribute('role', 'button');
+        riga.setAttribute('aria-label', 'Mostra in alto le statistiche di ' + (x.nome || camp.nome) + ' in questa partita');
+        riga.addEventListener('click', function () { metti(x, i, riga, true); });
+        riga.addEventListener('keydown', function (e) {
+          if (e.target === riga && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); metti(x, i, riga, true); }
+        });
+        righeGioc.push(riga);
+        if (x.id && x.id === profiloAperto) primo = [x, i, riga];
         var chi = el('div', 'gioc-chi');
         var dettagli = corto(x.danni) + ' danni · ' + corto(x.subiti) + ' subiti' + (x.cc ? ' · ' + x.cc + ' CC' : '');
-        var camp = campioneDi(x);
         if (x.nome) {
-          var nomeG = el('b', null, x.nome + (x.mvp ? ' 👑' : ''));
-          if (apribile) nomeG.appendChild(el('span', 'vai', '›'));
+          var nomeG = el('b');
+          if (x.id && x.id !== profiloAperto) {
+            var link = el('button', 'nome-gioc', x.nome);
+            link.type = 'button';
+            link.title = 'Apri il profilo di ' + x.nome;
+            link.addEventListener('click', function (e) { e.stopPropagation(); profiloDaPartita(x.id); });
+            figli(nomeG, [link, el('span', 'vai', '›')]);
+          } else {
+            nomeG.textContent = x.nome;
+          }
+          if (x.mvp) nomeG.appendChild(document.createTextNode(' 👑'));
           figli(chi, [nomeG, el('small', null, camp.nome + ' · ' + dettagli)]);
         }
         else { figli(chi, [el('b', 'estraneo', camp.nome), el('small', null, dettagli)]); }
@@ -3458,13 +3489,16 @@ Classifica finale del mese.        </p>
       });
       corpoPartita.appendChild(box);
     });
+    if (primo) metti(primo[0], primo[1], primo[2], false);
+    else statistiche.remove();
 
-    corpoPartita.appendChild(el('p', 'partita__nota', g.votati
+    corpoPartita.appendChild(el('p', 'partita__nota', (g.votati
       ? 'Voto della partita: la formula della classifica calcolata solo su questa partita, confrontando tra loro ' +
         'i giocatori del gruppo in campo (qui ' + g.votati + '). 50 = nella media del gruppo; 👑 = il voto più alto.' +
         ' Sotto il voto, M (mese) e A (anno): di quanto la partita ha spostato lo score di ognuno in quella classifica ' +
         '(▲ sale, ▼ scende; subito prima → subito dopo).'
-      : 'Il voto della partita compare quando in campo ci sono almeno 3 giocatori del gruppo.'));
+      : 'Il voto della partita compare quando in campo ci sono almeno 3 giocatori del gruppo.') +
+      ' Tocca una riga per vedere in alto le statistiche di quel giocatore; tocca il nome per aprire il suo profilo.'));
 
     if (g.serata) {
       var link = el('a', null, 'Apri la Gazzetta della serata · ' + g.serata.data);
