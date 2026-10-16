@@ -6,7 +6,16 @@
 <title>Matchmaking · Tier list ARAM</title>
 <meta name="description" content="Segna chi è disponibile: il matchmaking propone due squadre di pari numero con la somma degli score più vicina possibile.">
 <meta name="theme-color" content="#0b0f17">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff7a3d'/><text x='50' y='72' font-size='62' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23160a03'>S</text></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tier ARAM">
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+</script><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff7a3d'/><text x='50' y='72' font-size='62' font-family='Arial' font-weight='900' text-anchor='middle' fill='%23160a03'>S</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
