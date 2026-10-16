@@ -80,6 +80,18 @@
   .stato { display: flex; flex-wrap: wrap; gap: 6px; }
   .pillola { font-size: .78rem; color: var(--tenue); background: var(--superficie); border: 1px solid var(--linea); border-radius: 999px; padding: 4px 11px; }
   .pillola strong { color: var(--testo); font-weight: 600; }
+  button.pillola { font-family: inherit; cursor: pointer; position: relative; }
+  button.pillola:hover { border-color: var(--accento); color: var(--testo); }
+  .pallino { position: absolute; top: -2px; right: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--accento);
+    box-shadow: 0 0 0 2px var(--sfondo); }
+  /* novità dell'app */
+  .novita__voce { padding: 10px 0; border-top: 1px solid var(--linea); }
+  .novita__voce:first-of-type { border-top: 0; padding-top: 2px; }
+  .novita__testa { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+  .novita__testa b { font: 800 1.1rem/1.15 var(--f-titoli); text-transform: uppercase; }
+  .novita__testa span { font-size: .76rem; color: var(--tenue); }
+  .novita__voce ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; font-size: .86rem; line-height: 1.45; }
+  .novita__elenco { max-height: min(60dvh, 520px); overflow-y: auto; }
   .titolo { margin: 0; font: 800 clamp(2.7rem, 9vw, 5.6rem)/.88 var(--f-titoli); text-transform: uppercase; letter-spacing: .005em; text-wrap: balance; }
   .titolo span { color: var(--accento); }
   .sottotitolo { margin: 0; color: var(--tenue); max-width: 64ch; }
@@ -461,8 +473,8 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>17/10/2026 alle 00:57</strong></span>
-      </div>
+        <span class="pillola">Aggiornato <strong>17/10/2026 alle 01:02</strong></span>
+<button type="button" class="pillola" id="apri-novita">Versione <strong>1.4</strong> · Novità<span class="pallino" id="novita-pallino" hidden></span></button>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
     <p class="sottotitolo">La classifica di bravura del gruppo, calcolata solo sulle partite personalizzate giocate tra di noi (almeno 2 di noi nella stessa partita). Tocca un giocatore per aprire il suo profilo.</p>
@@ -3133,6 +3145,28 @@ Classifica finale del mese.        </p>
   <div class="profilo__corpo" id="profilo-corpo"></div>
 </dialog>
 
+<dialog class="notifiche" id="novita" aria-labelledby="novita-titolo">
+  <button type="button" class="chiudi" id="novita-chiudi" aria-label="Chiudi">×</button>
+  <h3 id="novita-titolo">🆕 Novità dell'app</h3>
+  <div class="novita__elenco">
+    <section class="novita__voce">
+      <div class="novita__testa"><b>L&#39;app sul telefono</b><span>versione 1.4 · 17/10/2026</span></div>
+<ul><li>La tier list si installa come app: su iPhone Condividi → Aggiungi alla schermata Home, su Android da Chrome.</li><li>🔔 Notifiche: scegli tu se ricevere la Gazzetta, i cambi di tier e le partite nuove.</li><li>🆕 Ogni versione nuova arriva con una notifica e il riassunto delle novità, che trovi sempre qui.</li></ul>    </section>
+    <section class="novita__voce">
+      <div class="novita__testa"><b>Discord e bacheca della serata</b><span>versione 1.3 · 16/10/2026</span></div>
+<ul><li>La Gazzetta di ogni serata e i cambi di tier arrivano anche nel canale #tierlist di Discord.</li><li>Nella Gazzetta c&#39;è la bacheca della serata: Cashpihero, Pezzente, Toro, Principessa, Madre Teresa di Calcutta, Bestia di Satana e Cornuto.</li></ul>    </section>
+    <section class="novita__voce">
+      <div class="novita__testa"><b>Nuovi pesi del punteggio</b><span>versione 1.2 · 16/10/2026</span></div>
+<ul><li>Vittorie 28, danni 20, subiti e ridotti 15, KP 12, KDA 10, CC 10, cure 5.</li><li>Classifiche, voti e serate passate sono stati ricalcolati con i pesi nuovi.</li></ul>    </section>
+    <section class="novita__voce">
+      <div class="novita__testa"><b>Dentro ogni partita</b><span>versione 1.1 · 14/10/2026</span></div>
+<ul><li>Tocca una delle ultime partite di un profilo: risultato, K/D/A e statistiche di tutti.</li><li>Voto 0-100 di ognuno in quella partita, con 👑 al migliore, e le freccine ▲▼ di quanto ha spostato lo score del mese e dell&#39;anno.</li><li>Tocca una riga per vedere in alto le statistiche di quel giocatore; tocca un nome per aprire il suo profilo.</li></ul>    </section>
+    <section class="novita__voce">
+      <div class="novita__testa"><b>La tier list nel cloud</b><span>versione 1.0 · 12/10/2026</span></div>
+<ul><li>La classifica si aggiorna da sola anche a PC spento, con le partite tra amici inviate dai vostri PC.</li><li>Profili, Gazzetta della Notte e matchmaking sempre online.</li></ul>    </section>
+  </div>
+</dialog>
+
 <dialog class="notifiche" id="notifiche" aria-labelledby="notifiche-titolo">
   <button type="button" class="chiudi" id="notifiche-chiudi" aria-label="Chiudi">×</button>
   <h3 id="notifiche-titolo">🔔 Notifiche</h3>
@@ -3759,6 +3793,31 @@ Classifica finale del mese.        </p>
   document.getElementById('profilo-chiudi').addEventListener('click', function () { dialogo.close(); });
   dialogo.addEventListener('click', function (e) { if (e.target === dialogo) dialogo.close(); });
 })();
+
+  // ---------- 🆕 novità dell'app: pallino finché non le hai viste; ?novita=1 (dalla notifica) le apre ----------
+  (function () {
+    var bottone = document.getElementById('apri-novita');
+    if (!bottone) return;
+    var finestra = document.getElementById('novita');
+    var pallino = document.getElementById('novita-pallino');
+    var versione = "1.4";
+    var CHIAVE = 'novita-vista';
+    var vista = null;
+    try { vista = localStorage.getItem(CHIAVE); } catch (e) {}
+    pallino.hidden = vista === versione;
+    function apriNovita() {
+      finestra.showModal();
+      pallino.hidden = true;
+      try { localStorage.setItem(CHIAVE, versione); } catch (e) {}
+    }
+    bottone.addEventListener('click', apriNovita);
+    document.getElementById('novita-chiudi').addEventListener('click', function () { finestra.close(); });
+    finestra.addEventListener('click', function (e) { if (e.target === finestra) finestra.close(); });
+    if (new URLSearchParams(location.search).get('novita') && typeof finestra.showModal === 'function') {
+      apriNovita();
+      if (history.replaceState) history.replaceState(null, '', location.pathname + location.hash);
+    }
+  })();
 
   // ---------- 🔔 notifiche sul telefono (Web Push) ----------
   (function () {
