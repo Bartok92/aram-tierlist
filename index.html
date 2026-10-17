@@ -473,8 +473,8 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>18/10/2026 alle 00:34</strong></span>
-<button type="button" class="pillola" id="apri-novita">Versione <strong>1.4</strong> · Novità<span class="pallino" id="novita-pallino" hidden></span></button>      </div>
+        <span class="pillola">Aggiornato <strong>18/10/2026 alle 01:01</strong></span>
+<button type="button" class="pillola" id="apri-novita">Versione <strong>1.5</strong> · Novità<span class="pallino" id="novita-pallino" hidden></span></button>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
     <p class="sottotitolo">La classifica di bravura del gruppo, calcolata solo sulle partite personalizzate giocate tra di noi (almeno 2 di noi nella stessa partita). Tocca un giocatore per aprire il suo profilo.</p>
@@ -3150,6 +3150,9 @@ Classifica finale del mese.        </p>
   <h3 id="novita-titolo">🆕 Novità dell'app</h3>
   <div class="novita__elenco">
     <section class="novita__voce">
+      <div class="novita__testa"><b>Premi anche nelle serate corte</b><span>versione 1.5 · 18/10/2026</span></div>
+<ul><li>I premi di Gloria e d&#39;Infamia della Gazzetta ora si assegnano già con 3 partite (prima ne servivano 4).</li><li>Le serate passate da 3 partite sono state ricalcolate e hanno i loro premi.</li></ul>    </section>
+    <section class="novita__voce">
       <div class="novita__testa"><b>L&#39;app sul telefono</b><span>versione 1.4 · 17/10/2026</span></div>
 <ul><li>La tier list si installa come app: su iPhone Condividi → Aggiungi alla schermata Home, su Android da Chrome.</li><li>🔔 Notifiche: scegli tu se ricevere la Gazzetta, i cambi di tier e le partite nuove.</li><li>🆕 Ogni versione nuova arriva con una notifica e il riassunto delle novità, che trovi sempre qui.</li></ul>    </section>
     <section class="novita__voce">
@@ -3800,7 +3803,7 @@ Classifica finale del mese.        </p>
     if (!bottone) return;
     var finestra = document.getElementById('novita');
     var pallino = document.getElementById('novita-pallino');
-    var versione = "1.4";
+    var versione = "1.5";
     var CHIAVE = 'novita-vista';
     var vista = null;
     try { vista = localStorage.getItem(CHIAVE); } catch (e) {}
