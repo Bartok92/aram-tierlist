@@ -473,8 +473,8 @@
     <div class="testata__barra">
       <p class="occhiello">Road to HERO! · ARAM e ARAM: Mayhem · 10 giocatori</p>
       <div class="stato">
-        <span class="pillola">Aggiornato <strong>20/10/2026 alle 12:24</strong></span>
-<button type="button" class="pillola" id="apri-novita">Versione <strong>1.6</strong> · Novità<span class="pallino" id="novita-pallino" hidden></span></button>      </div>
+        <span class="pillola">Aggiornato <strong>20/10/2026 alle 12:38</strong></span>
+<button type="button" class="pillola" id="apri-novita">Versione <strong>1.6.1</strong> · Novità<span class="pallino" id="novita-pallino" hidden></span></button>      </div>
     </div>
     <h1 class="titolo">Tier list <span>ARAM</span></h1>
     <p class="sottotitolo">La classifica di bravura del gruppo, calcolata solo sulle partite personalizzate giocate tra di noi (almeno 2 di noi nella stessa partita). Tocca un giocatore per aprire il suo profilo.</p>
@@ -3150,6 +3150,9 @@ Classifica finale del mese.        </p>
   <h3 id="novita-titolo">🆕 Novità dell'app</h3>
   <div class="novita__elenco">
     <section class="novita__voce">
+      <div class="novita__testa"><b>Gazzetta più ordinata sul telefono</b><span>versione 1.6.1 · 20/10/2026</span></div>
+<ul><li>Tabella dei giocatori allineata e tutta dentro lo schermo (vinte scritte come 4/4).</li><li>Descrizioni dei premi non più tagliate, &#34;kill&#34; e risultati come 7–4 non vanno più a capo a metà.</li><li>Bacheca della serata senza buchi e albo d&#39;oro con le corone in colonna.</li></ul>    </section>
+    <section class="novita__voce">
       <div class="novita__testa"><b>3 contro 3 e 4 contro 4 alla pari, e l&#39;impatto della serata sul mese</b><span>versione 1.6 · 20/10/2026</span></div>
 <ul><li>Danni, subiti, cure e CC ora si misurano rispetto alla media della squadra (1,00× = come un compagno medio): prima chi giocava più spesso in 3 contro 3 sembrava più forte.</li><li>Nella Gazzetta, accanto al voto della serata, c&#39;è di quanto la serata ha spostato il tuo score del mese (▲ sale, ▼ scende).</li><li>Classifiche e serate passate sono state ricalcolate.</li></ul>    </section>
     <section class="novita__voce">
@@ -3806,7 +3809,7 @@ Classifica finale del mese.        </p>
     if (!bottone) return;
     var finestra = document.getElementById('novita');
     var pallino = document.getElementById('novita-pallino');
-    var versione = "1.6";
+    var versione = "1.6.1";
     var CHIAVE = 'novita-vista';
     var vista = null;
     try { vista = localStorage.getItem(CHIAVE); } catch (e) {}
